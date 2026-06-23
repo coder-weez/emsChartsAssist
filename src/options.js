@@ -125,7 +125,7 @@ function restore_options() {
             var user_val = items[field_id];
 
             if (field_type == "text" || field_type == "textarea") {
-                document.getElementById(field_id).value = user_val;
+                document.getElementById(field_id).value = (user_val == null ? "" : user_val);
 
             } else if (field_type == "select") {
                 var sbox = document.getElementById(field_id);
