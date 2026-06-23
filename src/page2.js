@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-    $('.headerTable').append('<button style="background:red;color:white;" class="chartfiller">AutoComplete</button>');
+    $('.headerTable').append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
         chrome.runtime.sendMessage({
@@ -34,6 +34,8 @@ $(document).ready(function() {
             $('select[name=pt_moved_via]').val(to_truck);
             $('select[name=pt_position]').val(position);
             $('select[name=pt_moved_from]').val(from_truck);
+
+            caFlash('input[name=PRMAIN_ccduration], input[name=stretcher_purpose_descr], textarea[name=PRMAIN_cc], textarea[name=PRMAIN_hpi], textarea[name=PRMAIN_belongings], textarea[name=scene_description], select[name=PRMAIN_first_on_scene], select[name=PRMAIN_als_assessment], select[name=PRMAIN_ccdurunits], select[name=pt_moved_via], select[name=pt_position], select[name=pt_moved_from]');
         });
     });
 });

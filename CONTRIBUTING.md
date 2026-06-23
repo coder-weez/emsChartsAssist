@@ -47,4 +47,4 @@ When saving, do not "commit directly to the `master` branch" - always "Create a 
 
 #### Adding Documentation
 
-If you came here looking for information about Chartfiller, but found it elsewhere, or figured it out yourself, other people will probably have the same question. Consider editing the "Wiki" tab to add end-user documentation.
+If you came here looking for information about EMSCharts Assist, but found it elsewhere, or figured it out yourself, other people will probably have the same question. Consider editing the "Wiki" tab to add end-user documentation.

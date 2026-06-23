@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.headerTable').append('<button style="background:red;color:white;" class="chartfiller">AutoComplete</button>');
+    $('.headerTable').append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
         chrome.runtime.sendMessage({
@@ -45,6 +45,8 @@ $(document).ready(function() {
             if (ap_findings != '') {
                 $('input[name=ap_findings]').val(ap_findings);
             }
+
+            caFlash('input[name=head_comments], input[name=neck_comments], input[name=chest_comments], input[name=ap_appearance], input[name=ap_palpation], input[name=ap_bowel_sounds], input[name=ap_findings], input[name=pelvis_comments], input[name=back_comments], input[name=ex_comments], input[name=ex_restraints], input[name=ex_skin_findings], select[name=trachea]');
         });
     });
 });

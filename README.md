@@ -1,7 +1,22 @@
-Chartfiller
-===========
+EMSCharts Assist
+================
 
-Chartfiller is a free extension for the Chrome browser which allows you to store defaults for emscharts.com patient care reports.
+EMSCharts Assist is a free extension for the Chrome browser which allows you to store defaults for emscharts.com patient care reports.
+
+
+## Disclaimer
+
+This is an independent, unofficial tool. It is **not affiliated with,
+endorsed by, or supported by emsCharts, Inc.** "emsCharts" and any related
+names are trademarks of their respective owners.
+
+This extension fills patient care report fields with the default values you
+configure. **You are responsible for reviewing and verifying every auto-filled
+value for accuracy before saving or submitting a report.** It does not
+guarantee the correctness or appropriateness of any data it enters. Use at your
+own risk; the software is provided "AS IS" without warranty of any kind (see
+[LICENSE.txt](LICENSE.txt)).
+
 
 > **Manifest V3:** This extension has been migrated to Chrome's Manifest V3.
 > The background page is now a service worker, defaults are stored in
@@ -38,7 +53,7 @@ Click it to fill the form fields with the defaults you saved in Options.
 If the AutoComplete button doesn't fill anything:
 
   1. Make sure you've saved defaults in the **Options** page first.
-  2. Open `chrome://extensions/`, find **EMSCharts Filler**, and click the
+  2. Open `chrome://extensions/`, find **EMSCharts Assist**, and click the
      **service worker** link under "Inspect views" to view background errors.
   3. Reload the extension after making changes.
 
