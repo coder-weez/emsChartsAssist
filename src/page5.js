@@ -2,9 +2,23 @@ $(document).ready(function() {
     $('.headerTable').append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
-        chrome.runtime.sendMessage({
-            greeting: "pg5"
-        }, function(response) {
+        chrome.storage.sync.get(null, function(s) {
+            var response = {
+                head_comments: s["pg5_head_comments"],
+                neck_comments: s["pg5_neck_comments"],
+                chest_comments: s["pg5_chest_comments"],
+                ap_appearance: s["pg5_ap_appearance"],
+                ap_palpation: s["pg5_ap_palpation"],
+                ap_bowel_sounds: s["pg5_ap_bowel_sounds"],
+                ap_findings: s["pg5_ap_findings"],
+                trachea: 'M',
+                pelvis_comments: s["pg5_pelvis_comments"],
+                back_comments: s["pg5_back_comments"],
+                extremity_findings: s["pg5_ex_comments"],
+                restraints: s["pg5_ex_restraints"],
+                skin_findings: s["pg5_ex_skin_findings"]
+            };
+
             var head_comments = response.head_comments;
             var neck_comments = response.neck_comments;
             var chest_comments = response.chest_comments;

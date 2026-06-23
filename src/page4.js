@@ -2,9 +2,20 @@ $(document).ready(function() {
     $('.headerTable').append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
-        chrome.runtime.sendMessage({
-            greeting: "pg4"
-        }, function(response) {
+        chrome.storage.sync.get(null, function(s) {
+            var response = {
+                resp_comments: s["pg4_resp_comments"],
+                cardiac_comments: s["pg4_cardiac_comments"],
+                carotid_r: s["pg4_carotid_r"],
+                carotid_l: s["pg4_carotid_l"],
+                radial_r: s["pg4_radial_r"],
+                radial_l: s["pg4_radial_l"],
+                fem_r: s["pg4_fem_r"],
+                fem_l: s["pg4_fem_l"],
+                dors_r: s["pg4_dors_r"],
+                dors_l: s["pg4_dors_l"]
+            };
+
             var resp_comments = response.resp_comments;
             var cardiac_comments = response.cardiac_comments;
             var carotid_r = response.carotid_r;

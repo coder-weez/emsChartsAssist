@@ -2,9 +2,15 @@ $(document).ready(function() {
     $('.headerTable').append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
-        chrome.runtime.sendMessage({
-            greeting: "pg3"
-        }, function(response) {
+        chrome.storage.sync.get(null, function(s) {
+            var response = {
+                neuro_comments: s["pg3_neuro_comments"],
+                stroke_scale: s["pg3_stroke_scale"],
+                gcs_eye: s["pg3_gcs_eye"],
+                gcs_verbal: s["pg3_gcs_verbal"],
+                gcs_motor: s["pg3_gcs_motor"]
+            };
+
             var neuro_comments = response.neuro_comments;
             var stroke_scale = response.stroke_scale;
             var gcs_eye = response.gcs_eye;

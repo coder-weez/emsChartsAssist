@@ -18,11 +18,10 @@ own risk; the software is provided "AS IS" without warranty of any kind (see
 [LICENSE.txt](LICENSE.txt)).
 
 
-> **Manifest V3:** This extension has been migrated to Chrome's Manifest V3.
-> The background page is now a service worker, defaults are stored in
-> `chrome.storage.sync`, and the legacy `chrome.extension` messaging APIs have
-> been replaced with `chrome.runtime`. It works on current versions of Chrome,
-> which no longer load Manifest V2 extensions.
+> **Manifest V3:** This extension targets Chrome's Manifest V3. Defaults are
+> stored in `chrome.storage.sync` and read directly by the content scripts —
+> there is no background service worker or message passing. It works on current
+> versions of Chrome, which no longer load Manifest V2 extensions.
 >
 > **Dependencies:** The content scripts use jQuery 3.7.1. The Options page has
 > no third-party dependencies — its collapsible sections use native HTML
@@ -48,13 +47,54 @@ Open a patient care report on `emscharts.com`. On the supported pages
 Click it to fill the form fields with the defaults you saved in Options.
 
 
+## How settings are stored
+
+Your defaults are saved with Chrome's built-in
+[`chrome.storage.sync`](https://developer.chrome.com/docs/extensions/reference/api/storage)
+(the `storage` permission in the manifest). Notes for users and contributors:
+
+  * **Defaults only.** Only the template values you enter on the Options page are
+    stored. No patient data and nothing from actual PCRs is ever saved or
+    transmitted — the extension has no backend.
+  * **Synced across devices.** Because it uses `storage.sync`, your defaults
+    follow you to any Chrome where you're signed into the same profile with sync
+    enabled (otherwise it behaves like local storage).
+  * **Flat key/value layout.** Settings are stored as a single flat object whose
+    keys are page-prefixed strings (e.g. `pg2_chief_complaint`, `pg3_gcs_motor`).
+    Values are plain strings — either a field's text or a `<select>` option value.
+  * **Size limits.** `storage.sync` allows roughly 100 KB total and ~8 KB per
+    item; the short text defaults here stay well within that.
+  * **Not encrypted at rest.** Values are stored as-is and are readable by anyone
+    with access to the Chrome profile, so avoid putting sensitive information in
+    the default fields.
+
+`options.js` writes the values and the page content scripts read them straight
+from `chrome.storage.sync` when an AutoComplete button is clicked (there is no
+background service worker).
+
+### Back up, restore, or share your defaults
+
+The Options page has **Export defaults** and **Import defaults** buttons:
+
+  * **Export defaults** downloads all of your saved settings as a single
+    `emscharts-assist-defaults.json` file.
+  * **Import defaults** loads settings from a previously exported file and saves
+    them. Only keys the extension recognizes are imported, so an unrelated or
+    malformed file is rejected with an error message. Importing overwrites any
+    existing value for the same field.
+
+This makes it easy to back up your defaults, move them to another computer, or
+share a standard set with colleagues.
+
+
 ## Troubleshooting
 
 If the AutoComplete button doesn't fill anything:
 
   1. Make sure you've saved defaults in the **Options** page first.
-  2. Open `chrome://extensions/`, find **EMSCharts Assist**, and click the
-     **service worker** link under "Inspect views" to view background errors.
+  2. Open a supported PCR page, then open Chrome's DevTools console
+     (right-click the page &rarr; **Inspect** &rarr; **Console**) to check for
+     any errors logged by the extension.
   3. Reload the extension after making changes.
 
 
