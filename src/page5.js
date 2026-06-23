@@ -35,34 +35,19 @@ $(document).ready(function() {
             var restraints = response.restraints;
             var skin_findings = response.skin_findings;
 
-            if (ap_findings != '') {
-                $('input[name=ap_findings]').val(ap_findings);
-            }
-            if (trachea != '') {
-                $('select[name=trachea]').val(trachea);
-            }
-            if (restraints != '') {
-                $('input[name=ex_restraints]').val(restraints);
-            }
-
-            $('input[name=head_comments]').val(head_comments);
-            $('input[name=neck_comments]').val(neck_comments);
-            $('input[name=chest_comments]').val(chest_comments);
-            $('input[name=ap_appearance]').val(ap_appearance);
-            $('input[name=ap_palpation]').val(ap_palpation);
-            $('input[name=ap_bowel_sounds]').val(ap_bowel_sounds);
-            $('input[name=pelvis_comments]').val(pelvis_comments);
-            $('input[name=back_comments]').val(back_comments);
-            $('input[name=ex_comments]').val(extremity_findings);
-            $('input[name=ex_restraints]').val(restraints);
-            $('input[name=ex_skin_findings]').val(skin_findings);
-
-
-            if (ap_findings != '') {
-                $('input[name=ap_findings]').val(ap_findings);
-            }
-
-            caFlash('input[name=head_comments], input[name=neck_comments], input[name=chest_comments], input[name=ap_appearance], input[name=ap_palpation], input[name=ap_bowel_sounds], input[name=ap_findings], input[name=pelvis_comments], input[name=back_comments], input[name=ex_comments], input[name=ex_restraints], input[name=ex_skin_findings], select[name=trachea]');
+            caFill('input[name=head_comments]', head_comments, 'Head Findings');
+            caFill('input[name=neck_comments]', neck_comments, 'Neck Findings');
+            caFill('input[name=chest_comments]', chest_comments, 'Chest Findings');
+            caFill('input[name=ap_appearance]', ap_appearance, 'Abdomen (Appearance)');
+            caFill('input[name=ap_palpation]', ap_palpation, 'Abdomen (Palpation)');
+            caFill('input[name=ap_bowel_sounds]', ap_bowel_sounds, 'Abdomen (Bowel Sounds)');
+            caFill('input[name=ap_findings]', ap_findings, 'Abdomen (Comments)');
+            caFill('input[name=pelvis_comments]', pelvis_comments, 'Pelvis Findings');
+            caFill('input[name=back_comments]', back_comments, 'Back Findings');
+            caFill('input[name=ex_comments]', extremity_findings, 'Extremity Findings');
+            caFill('input[name=ex_restraints]', restraints, 'Restraints');
+            caFill('input[name=ex_skin_findings]', skin_findings, 'Skin Findings');
+            caFill('select[name=trachea]', trachea, 'Trachea');
         });
     });
 });

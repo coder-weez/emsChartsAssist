@@ -32,22 +32,18 @@ $(document).ready(function() {
             var level_care = response.level_care;
             
             
-            $('input[name=PRMAIN_ccduration]').val(cc_duration);
-            $('input[name=stretcher_purpose_descr]').val(stretcher_purpose);
-                    
-            $('textarea[name=PRMAIN_cc]').val(chief_complaint);
-            $('textarea[name=PRMAIN_hpi]').val(hpi);
-            $('textarea[name=PRMAIN_belongings]').val(patient_belongings);
-            $('textarea[name=scene_description]').val(scene_description);
-
-            $('select[name=PRMAIN_first_on_scene]').val(first_on_scene);
-            $('select[name=PRMAIN_ccdurunits]').val(cc_duration_units);
-            $('select[name=pt_moved_via]').val(to_truck);
-            $('select[name=pt_position]').val(position);
-            $('select[name=pt_moved_from]').val(from_truck);
-            $('[name=PRMAIN_level_care_per_protocol]').val(level_care);
-
-            caFlash('input[name=PRMAIN_ccduration], input[name=stretcher_purpose_descr], textarea[name=PRMAIN_cc], textarea[name=PRMAIN_hpi], textarea[name=PRMAIN_belongings], textarea[name=scene_description], select[name=PRMAIN_first_on_scene], select[name=PRMAIN_ccdurunits], select[name=pt_moved_via], select[name=pt_position], select[name=pt_moved_from], [name=PRMAIN_level_care_per_protocol]');
+            caFill('textarea[name=PRMAIN_cc]', chief_complaint, 'Chief Complaint');
+            caFill('input[name=PRMAIN_ccduration]', cc_duration, 'Duration');
+            caFill('select[name=PRMAIN_ccdurunits]', cc_duration_units, 'Duration Units');
+            caFill('textarea[name=PRMAIN_hpi]', hpi, 'HPI');
+            caFill('textarea[name=scene_description]', scene_description, 'Scene Description');
+            caFill('select[name=PRMAIN_first_on_scene]', first_on_scene, 'First On Scene');
+            caFill('[name=PRMAIN_level_care_per_protocol]', level_care, 'Level of Care per Protocol');
+            caFill('textarea[name=PRMAIN_belongings]', patient_belongings, 'Patient Belongings');
+            caFill('select[name=pt_moved_via]', to_truck, 'To Ambulance Via');
+            caFill('select[name=pt_position]', position, 'Position in Ambulance');
+            caFill('select[name=pt_moved_from]', from_truck, 'From Ambulance Via');
+            caFill('input[name=stretcher_purpose_descr]', stretcher_purpose, 'Stretcher Purpose');
         });
     });
 });

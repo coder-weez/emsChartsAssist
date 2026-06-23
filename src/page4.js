@@ -32,33 +32,15 @@ $(document).ready(function() {
             var dors_r = response.dors_r; // delete
             var dors_l = response.dors_l; // delete
 
-            if (carotid_r != '') {
-                $('select[name=PULSE_CAROTID_R]').val(carotid_r);
-            }
-            if (carotid_l != '') {
-                $('select[name=PULSE_CAROTID]').val(carotid_l);
-            }
-            if (radial_r != '') {
-                $('select[name=PULSE_RAD_R]').val(radial_r);
-            }
-            if (radial_l != '') {
-                $('select[name=PULSE_RAD_L]').val(radial_l);
-            }
-            if (fem_r != '') {
-                $('select[name=PULSE_FEM_R]').val(fem_r);
-            }
-            if (fem_l != '') {
-                $('select[name=PULSE_FEM_L]').val(fem_l);
-            }
-            if (dors_r != '') {
-                $('select[name=PULSE_DORS_R]').val(dors_r);
-            }
-            if (dors_l != '') {
-                $('select[name=PULSE_DORS_L]').val(dors_l);
-            }
-            $('input[name=cv_comments]').val(cardiac_comments);
-
-            caFlash('input[name=cv_comments], select[name=PULSE_CAROTID_R], select[name=PULSE_CAROTID], select[name=PULSE_RAD_R], select[name=PULSE_RAD_L], select[name=PULSE_FEM_R], select[name=PULSE_FEM_L], select[name=PULSE_DORS_R], select[name=PULSE_DORS_L]');
+            caFill('select[name=PULSE_CAROTID_R]', carotid_r, 'Carotid (R)');
+            caFill('select[name=PULSE_CAROTID]', carotid_l, 'Carotid (L)');
+            caFill('select[name=PULSE_RAD_R]', radial_r, 'Radial (R)');
+            caFill('select[name=PULSE_RAD_L]', radial_l, 'Radial (L)');
+            caFill('select[name=PULSE_FEM_R]', fem_r, 'Femoral (R)');
+            caFill('select[name=PULSE_FEM_L]', fem_l, 'Femoral (L)');
+            caFill('select[name=PULSE_DORS_R]', dors_r, 'Dorsalis (R)');
+            caFill('select[name=PULSE_DORS_L]', dors_l, 'Dorsalis (L)');
+            caFill('input[name=cv_comments]', cardiac_comments, 'Cardiovascular Comments');
         });
     });
 });

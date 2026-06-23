@@ -76,3 +76,33 @@ function caFlash(selector) {
         }, 700);
     });
 }
+
+// Show a brief non-blocking notification at the bottom of the page.
+function caToast(message) {
+    var toast = jQuery('<div class="ca-toast"></div>').text(message).appendTo('body');
+    setTimeout(function() { toast.addClass('ca-toast-show'); }, 10);
+    setTimeout(function() {
+        toast.removeClass('ca-toast-show');
+        setTimeout(function() { toast.remove(); }, 300);
+    }, 3500);
+}
+
+// Fill a field with value. For text inputs and textareas, skips if the field
+// already has user-entered content and shows a toast instead. Selects are
+// always updated. Flashes the field on success.
+function caFill(selector, value, friendlyName) {
+    var el = jQuery(selector);
+    if (!el.length || value === undefined || value === null) return;
+    var tag = (el.prop('tagName') || '').toLowerCase();
+    var type = (el.attr('type') || 'text').toLowerCase();
+    var isText = tag === 'textarea' || (tag === 'input' && type !== 'checkbox' && type !== 'radio' && type !== 'hidden');
+    if (isText) {
+        var current = (el.val() || '').trim();
+        if (current !== '') {
+            caToast('"' + friendlyName + '" was not updated — field already has content.');
+            return;
+        }
+    }
+    el.val(value);
+    caFlash(selector);
+}

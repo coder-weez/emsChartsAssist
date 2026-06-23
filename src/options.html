@@ -43,7 +43,7 @@
                 width: 180px;
                 padding: 6px 8px;
                 text-align: right;
-                vertical-align: top;
+                vertical-align: middle;
                 color: #333;
             }
             .r {
@@ -321,11 +321,32 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="l">
-                            Pupil Size (L)
-                        </td>
+                        <td class="l"></td>
                         <td class="r">
-                            <select id="pg3_pupil_size_l">
+                            <span style="display:inline-block; width:130px; font-weight:bold;">Left</span>
+                            <span style="display:inline-block; width:130px; margin-left:8px; font-weight:bold;">Right</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Pupil Size</td>
+                        <td class="r">
+                            <select id="pg3_pupil_size_l" style="width:130px;">
+                                <option value="0"></option>
+                                <option value="10">2mm</option>
+                                <option value="11">3mm</option>
+                                <option value="12">4mm</option>
+                                <option value="13">5mm</option>
+                                <option value="14">6mm</option>
+                                <option value="15">7mm</option>
+                                <option value="3">Constricted</option>
+                                <option value="2">Dilated</option>
+                                <option value="17">Eye Fused</option>
+                                <option value="9">N/A</option>
+                                <option value="8">Normal</option>
+                                <option value="18">Pinpoint</option>
+                                <option value="16">Unable to Assess</option>
+                            </select>
+                            <select id="pg3_pupil_size_r" style="width:130px; margin-left:8px;">
                                 <option value="0"></option>
                                 <option value="10">2mm</option>
                                 <option value="11">3mm</option>
@@ -344,34 +365,16 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="l">
-                            Pupil Size (R)
-                        </td>
+                        <td class="l">Pupil React</td>
                         <td class="r">
-                            <select id="pg3_pupil_size_r">
+                            <select id="pg3_pupil_rx_l" style="width:130px;">
                                 <option value="0"></option>
-                                <option value="10">2mm</option>
-                                <option value="11">3mm</option>
-                                <option value="12">4mm</option>
-                                <option value="13">5mm</option>
-                                <option value="14">6mm</option>
-                                <option value="15">7mm</option>
-                                <option value="3">Constricted</option>
-                                <option value="2">Dilated</option>
-                                <option value="17">Eye Fused</option>
-                                <option value="9">N/A</option>
-                                <option value="8">Normal</option>
-                                <option value="18">Pinpoint</option>
-                                <option value="16">Unable to Assess</option>
+                                <option value="3">Non-React</option>
+                                <option value="5">Not Applicable</option>
+                                <option value="1">Reactive</option>
+                                <option value="4">Sluggish</option>
                             </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="l">
-                            Pupil React (L)
-                        </td>
-                        <td class="r">
-                            <select id="pg3_pupil_rx_l">
+                            <select id="pg3_pupil_rx_r" style="width:130px; margin-left:8px;">
                                 <option value="0"></option>
                                 <option value="3">Non-React</option>
                                 <option value="5">Not Applicable</option>
@@ -382,16 +385,117 @@
                     </tr>
                     <tr>
                         <td class="l">
-                            Pupil React (R)
+                            Pupil Comments
                         </td>
                         <td class="r">
-                            <select id="pg3_pupil_rx_r">
+                            <input type="text" id="pg3_pupil_comments">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l"></td>
+                        <td class="r">
+                            <span style="display:inline-block; width:160px; font-weight:bold;">Motor</span>
+                            <span style="display:inline-block; width:130px; margin-left:8px; font-weight:bold;">Sensory</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">LA</td>
+                        <td class="r">
+                            <select id="pg3_motor_la" style="width:160px;">
                                 <option value="0"></option>
-                                <option value="3">Non-React</option>
-                                <option value="5">Not Applicable</option>
-                                <option value="1">Reactive</option>
-                                <option value="4">Sluggish</option>
+                                <option value="4">Chemically Paralyzed</option>
+                                <option value="3">Flaccid</option>
+                                <option value="1">Normal</option>
+                                <option value="5">Not assessed</option>
+                                <option value="2">Weak</option>
                             </select>
+                            <select id="pg3_sensory_la" style="width:130px; margin-left:8px;">
+                                <option value="0"></option>
+                                <option value="3">Absent</option>
+                                <option value="2">Diminished</option>
+                                <option value="1">Normal</option>
+                                <option value="4">Not assessed</option>
+                                <option value="5">Unable To Assess</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">RA</td>
+                        <td class="r">
+                            <select id="pg3_motor_ra" style="width:160px;">
+                                <option value="0"></option>
+                                <option value="4">Chemically Paralyzed</option>
+                                <option value="3">Flaccid</option>
+                                <option value="1">Normal</option>
+                                <option value="5">Not assessed</option>
+                                <option value="2">Weak</option>
+                            </select>
+                            <select id="pg3_sensory_ra" style="width:130px; margin-left:8px;">
+                                <option value="0"></option>
+                                <option value="3">Absent</option>
+                                <option value="2">Diminished</option>
+                                <option value="1">Normal</option>
+                                <option value="4">Not assessed</option>
+                                <option value="5">Unable To Assess</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">LL</td>
+                        <td class="r">
+                            <select id="pg3_motor_ll" style="width:160px;">
+                                <option value="0"></option>
+                                <option value="4">Chemically Paralyzed</option>
+                                <option value="3">Flaccid</option>
+                                <option value="1">Normal</option>
+                                <option value="5">Not assessed</option>
+                                <option value="2">Weak</option>
+                            </select>
+                            <select id="pg3_sensory_ll" style="width:130px; margin-left:8px;">
+                                <option value="0"></option>
+                                <option value="3">Absent</option>
+                                <option value="2">Diminished</option>
+                                <option value="1">Normal</option>
+                                <option value="4">Not assessed</option>
+                                <option value="5">Unable To Assess</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">RL</td>
+                        <td class="r">
+                            <select id="pg3_motor_rl" style="width:160px;">
+                                <option value="0"></option>
+                                <option value="4">Chemically Paralyzed</option>
+                                <option value="3">Flaccid</option>
+                                <option value="1">Normal</option>
+                                <option value="5">Not assessed</option>
+                                <option value="2">Weak</option>
+                            </select>
+                            <select id="pg3_sensory_rl" style="width:130px; margin-left:8px;">
+                                <option value="0"></option>
+                                <option value="3">Absent</option>
+                                <option value="2">Diminished</option>
+                                <option value="1">Normal</option>
+                                <option value="4">Not assessed</option>
+                                <option value="5">Unable To Assess</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">
+                            Sensory Comments
+                        </td>
+                        <td class="r">
+                            <input type="text" id="pg3_sensory_comments">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">
+                            Motor Comments
+                        </td>
+                        <td class="r">
+                            <input type="text" id="pg3_motor_comments">
                         </td>
                     </tr>
                 </table>
