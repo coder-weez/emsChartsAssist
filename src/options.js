@@ -30,7 +30,6 @@ var txtAreas = [
 ];
 var selBoxes = [
     "pg2_duration_units",
-    "pg2_als_assessment",
     "pg2_to_truck",
     "pg2_position",
     "pg2_from_truck",
@@ -143,6 +142,22 @@ function restore_options() {
     });
 }
 
+// Remove any stored keys this extension no longer recognizes (e.g. settings
+// left behind by features that were removed), keeping chrome.storage.sync tidy.
+// Runs automatically when the Options page loads.
+function prune_stale_keys() {
+    var opts = _all_opts();
+    chrome.storage.sync.get(null, function(items) {
+        var stale = Object.keys(items).filter(function(k) {
+            return !opts.hasOwnProperty(k);
+        });
+        if (stale.length) {
+            console.info("Removing stale settings:", stale);
+            chrome.storage.sync.remove(stale);
+        }
+    });
+}
+
 // Download all saved defaults as a JSON file the user can back up or share.
 function export_options() {
     chrome.storage.sync.get(null, function(items) {
@@ -208,6 +223,7 @@ function import_options(ev) {
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
+document.addEventListener('DOMContentLoaded', prune_stale_keys);
 document.querySelector('#save').addEventListener('click', save_options);
 document.querySelector('#export').addEventListener('click', export_options);
 document.querySelector('#import-btn').addEventListener('click', function() {

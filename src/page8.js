@@ -1,9 +1,9 @@
 $(document).ready(function() {
-    $('.headerTable').append('<button class="atref ca-btn">At Ref</button>');
-    $('.headerTable').append('<button class="lvref ca-btn">Lv Ref</button>');
-    $('.headerTable').append('<button class="atrec ca-btn">At Rec</button>');
-    $('.headerTable').append('<button class="can1 ca-btn">Canned 1</button>');
-    $('.headerTable').append('<button class="can2 ca-btn">Canned 2</button>');
+    caToolbar().append('<button class="atref ca-btn">At Ref</button>');
+    caToolbar().append('<button class="lvref ca-btn">Lv Ref</button>');
+    caToolbar().append('<button class="atrec ca-btn">At Rec</button>');
+    caToolbar().append('<button class="can1 ca-btn">Canned 1</button>'); // update to "Refusal Comment"
+    caToolbar().append('<button class="can2 ca-btn">Canned 2</button>'); // update to "Custom Comment"
 
     $('.can1').click(function() {
         chrome.storage.sync.get(null, function(s) {
