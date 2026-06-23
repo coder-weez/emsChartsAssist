@@ -1,5 +1,7 @@
+// TOADD
+// Treachea
 $(document).ready(function() {
-    $('.headerTable').append('<button class="chartfiller ca-btn">AutoComplete</button>');
+    caToolbar().append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
         chrome.storage.sync.get(null, function(s) {

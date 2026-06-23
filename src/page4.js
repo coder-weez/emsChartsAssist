@@ -1,5 +1,10 @@
+// TOADD
+// Breathe sounds left
+// right
+// comment box
+// brachial L & R
 $(document).ready(function() {
-    $('.headerTable').append('<button class="chartfiller ca-btn">AutoComplete</button>');
+    caToolbar().append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
         chrome.storage.sync.get(null, function(s) {
@@ -24,8 +29,8 @@ $(document).ready(function() {
             var radial_l = response.radial_l;
             var fem_r = response.fem_r;
             var fem_l = response.fem_l;
-            var dors_r = response.dors_r;
-            var dors_l = response.dors_l;
+            var dors_r = response.dors_r; // delete
+            var dors_l = response.dors_l; // delete
 
             if (carotid_r != '') {
                 $('select[name=PULSE_CAROTID_R]').val(carotid_r);

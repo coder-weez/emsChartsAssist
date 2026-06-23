@@ -1,10 +1,24 @@
+// TOADD:
+// Mental Present
+// Mental Not Present
+// Neuro Present
+// Neuro Not Present
+// Pupils L/R Size -- dropdown
+// Pupils L/R React -- dropdown
+// Comments
+// Motor & Sensory
+// Sensor & Motor comment boxes
+// Airway Status
+// Airway Comments (NOT EXAM)
+// Performed By
+// Outcome
 $(document).ready(function() {
-    $('.headerTable').append('<button class="chartfiller ca-btn">AutoComplete</button>');
+    caToolbar().append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
         chrome.storage.sync.get(null, function(s) {
             var response = {
-                neuro_comments: s["pg3_neuro_comments"],
+                neuro_comments: s["pg3_neuro_comments"], // delete
                 stroke_scale: s["pg3_stroke_scale"],
                 gcs_eye: s["pg3_gcs_eye"],
                 gcs_verbal: s["pg3_gcs_verbal"],

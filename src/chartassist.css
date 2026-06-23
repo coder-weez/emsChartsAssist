@@ -1,18 +1,46 @@
 /* Shared styles injected into EMSCharts pages by EMSCharts Assist. */
+#ca-toolbar {
+    position: fixed;
+    top: 8px;
+    right: 8px;
+    z-index: 2147483647;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    align-items: center;
+}
+#ca-toolbar.ca-vertical {
+    flex-direction: column;
+    align-items: stretch;
+}
+#ca-drag {
+    cursor: move;
+    user-select: none;
+    padding: 0 4px;
+    color: #888;
+    font-size: 16px;
+    line-height: 1;
+    text-align: center;
+}
 .ca-btn {
-    margin-left: 6px;
+    margin-left: 0;
     padding: 4px 12px;
     border: none;
     border-radius: 4px;
-    background: #c11d1d;
+    background: #0d9488;
     color: #fff;
     font-weight: bold;
     cursor: pointer;
     line-height: 1.4;
 }
 .ca-btn:hover {
-    background: #a01818;
+    background: #0f766e;
 }
 .ca-btn:active {
-    background: #870f0f;
+    background: #115e59;
 }
