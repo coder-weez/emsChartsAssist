@@ -1,9 +1,9 @@
 $(document).ready(function() {
-    $('.headerTable').append('<button style="background:red;color:white;" class="atref">At Ref</button>');
-    $('.headerTable').append('<button style="background:red;color:white;" class="lvref">Lv Ref</button>');
-    $('.headerTable').append('<button style="background:red;color:white;" class="atrec">At Rec</button>');
-    $('.headerTable').append('<button style="background:red;color:white;" class="can1">Canned 1</button>');
-    $('.headerTable').append('<button style="background:red;color:white;" class="can2">Canned 2</button>');
+    $('.headerTable').append('<button class="atref ca-btn">At Ref</button>');
+    $('.headerTable').append('<button class="lvref ca-btn">Lv Ref</button>');
+    $('.headerTable').append('<button class="atrec ca-btn">At Rec</button>');
+    $('.headerTable').append('<button class="can1 ca-btn">Canned 1</button>');
+    $('.headerTable').append('<button class="can2 ca-btn">Canned 2</button>');
     
     $('.can1').click(function() {
         chrome.runtime.sendMessage({
@@ -11,6 +11,7 @@ $(document).ready(function() {
         }, function(response) {
             var can_1 = response.can_1;
             $('textarea[name=vs_comment]').val(can_1);
+            caFlash('textarea[name=vs_comment]');
         }); 
     });
     
@@ -20,6 +21,7 @@ $(document).ready(function() {
         }, function(response) {
             var can_2 = response.can_2;
             $('textarea[name=vs_comment]').val(can_2);
+            caFlash('textarea[name=vs_comment]');
         }); 
     });
     
@@ -37,6 +39,7 @@ $(document).ready(function() {
                 $('input[name=vtime]').val(at_ref[1]);
             }
             $('textarea[name=vs_comment]').val(at_ref_comment);
+            caFlash('input[name=vtime], textarea[name=vs_comment]');
         }); 
     });
     $('.lvref').click(function() {
@@ -53,6 +56,7 @@ $(document).ready(function() {
                 $('input[name=vtime]').val(lv_ref[1]);
             }
             $('textarea[name=vs_comment]').val(lv_ref_comment);
+            caFlash('input[name=vtime], textarea[name=vs_comment]');
         }); 
     });
     $('.atrec').click(function() {
@@ -68,6 +72,7 @@ $(document).ready(function() {
                 $('input[name=vtime]').val(at_rec[1]);
             }
             $('textarea[name=vs_comment]').val(at_rec_comment);
+            caFlash('input[name=vtime], textarea[name=vs_comment]');
         });
     });
 });

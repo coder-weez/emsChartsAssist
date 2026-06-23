@@ -1,6 +1,6 @@
 {
-    "name": "EMSCharts Filler",
-    "short_name": "Chartfiller",
+    "name": "EMSCharts Assist",
+    "short_name": "ChartAssist",
     "version": "0.2.1.0",
     "version_name": "0.2.1 (Manifest V3)",
     "description": "Autofills EMSCharts with defaults.",
@@ -26,33 +26,78 @@
     ],
     "content_scripts": [
         {
-            "matches": ["https://*.emscharts.com/pr/page2.cfm*"],
-            "js": ["jquery-3.7.1.min.js", "page2.js"],
-            "run_at": "document_start"
+            "matches": [
+                "https://*.emscharts.com/pr/page2.cfm*"
+            ],
+            "js": [
+                "jquery-3.7.1.min.js",
+                "chartassist.js",
+                "page2.js"
+            ],
+            "run_at": "document_start",
+            "css": [
+                "chartassist.css"
+            ]
         },
         {
-            "matches": ["https://*.emscharts.com/pr/page3.cfm*"],
-            "js": ["jquery-3.7.1.min.js", "page3.js"],
-            "run_at": "document_start"
+            "matches": [
+                "https://*.emscharts.com/pr/page3.cfm*"
+            ],
+            "js": [
+                "jquery-3.7.1.min.js",
+                "chartassist.js",
+                "page3.js"
+            ],
+            "run_at": "document_start",
+            "css": [
+                "chartassist.css"
+            ]
         },
         {
-            "matches": ["https://*.emscharts.com/pr/page4.cfm*"],
-            "js": ["jquery-3.7.1.min.js", "page4.js"],
-            "run_at": "document_start"
+            "matches": [
+                "https://*.emscharts.com/pr/page4.cfm*"
+            ],
+            "js": [
+                "jquery-3.7.1.min.js",
+                "chartassist.js",
+                "page4.js"
+            ],
+            "run_at": "document_start",
+            "css": [
+                "chartassist.css"
+            ]
         },
         {
-            "matches": ["https://*.emscharts.com/pr/page5.cfm*"],
-            "js": ["jquery-3.7.1.min.js", "page5.js"],
-            "run_at": "document_start"
+            "matches": [
+                "https://*.emscharts.com/pr/page5.cfm*"
+            ],
+            "js": [
+                "jquery-3.7.1.min.js",
+                "chartassist.js",
+                "page5.js"
+            ],
+            "run_at": "document_start",
+            "css": [
+                "chartassist.css"
+            ]
         },
         {
-            "matches": ["https://*.emscharts.com/pr/page8.cfm*"],
-            "js": ["jquery-3.7.1.min.js", "page8.js"],
-            "run_at": "document_start"
+            "matches": [
+                "https://*.emscharts.com/pr/page8.cfm*"
+            ],
+            "js": [
+                "jquery-3.7.1.min.js",
+                "chartassist.js",
+                "page8.js"
+            ],
+            "run_at": "document_start",
+            "css": [
+                "chartassist.css"
+            ]
         }
     ],
     "action": {
-        "default_title": "EMSCharts Filler",
+        "default_title": "EMSCharts Assist",
         "default_popup": "popup.html",
         "default_icon": {
             "16": "icon_16.png",

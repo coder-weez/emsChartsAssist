@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.headerTable').append('<button style="background:red;color:white;" class="chartfiller">AutoComplete</button>');
+    $('.headerTable').append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
         chrome.runtime.sendMessage({
@@ -16,6 +16,8 @@ $(document).ready(function() {
             $('select[name=gcs_eye_1]').val(gcs_eye);
             $('select[name=gcs_verbal_1]').val(gcs_verbal);
             $('select[name=gcs_motor_1]').val(gcs_motor);
+
+            caFlash('input[name=head_findings], select[name=stroke_scale], select[name=gcs_eye_1], select[name=gcs_verbal_1], select[name=gcs_motor_1]');
         });
     });
 });

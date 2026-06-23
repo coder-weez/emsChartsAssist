@@ -4,36 +4,77 @@
     <meta charset="utf-8">
     <style type="text/css">
       body {
-        width:300px;
-        background-color:#003f7f;
-        color:#fff;
-        font-size:12px;
+        width: 280px;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        color: #222;
+      }
+      .header {
+        background: #003f7f;
+        color: #fff;
+        padding: 10px 14px;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 15px;
+      }
+      .content {
+        padding: 12px 14px;
+      }
+      .content p {
+        margin: 0 0 10px;
+        line-height: 1.4;
       }
       a {
-        color:#ccc;
-        text-decoration:none;
+        color: #2191c0;
+        text-decoration: none;
       }
       a:hover {
-        text-decoration:underline;
+        text-decoration: underline;
+      }
+      .btn-link {
+        display: inline-block;
+        padding: 6px 12px;
+        background: #2191c0;
+        color: #fff;
+        border-radius: 4px;
+        font-weight: bold;
+      }
+      .btn-link:hover {
+        background: #1b7aa3;
+        text-decoration: none;
+      }
+      .muted {
+        color: #777;
+        font-size: 11px;
+        word-break: break-all;
       }
     </style>
   </head>
   <body>
-    <h3>EMSCharts Assist</h3>
+    <div class="header">
+      <h1>EMSCharts Assist</h1>
+    </div>
+    <div class="content">
+      <p>Set default values that the AutoComplete buttons fill into your EMSCharts PCRs.</p>
 
-    <p>This extension allows you to set defaults for your EMSCharts PCRs.</p>
-    
-    <p>
-      If this is your first time using this extension, right click on this
-      icon and choose "Options". From there, you'll want to look at the
-      categories and fill in your default values.
-    </p>
-    
-    <p>
-      To report an issue, request a new feature, or complain about how much it sucks,
-      visit the <a href="https://github.com/coder-weez/emsChartsAssist/issues">issues tab on GitHub</a>
-    </p>
-    
-    <p>Source code is available at <a href="https://github.com/coder-weez/emsChartsAssist.git">https://github.com/coder-weez/emsChartsAssist.git</a>.</p>
+      <p>
+        First time here? Right-click this icon and choose <strong>Options</strong>,
+        then fill in your defaults by category.
+      </p>
+
+      <p>
+        <a class="btn-link"
+           href="https://github.com/coder-weez/emsChartsAssist/issues"
+           target="_blank" rel="noopener">Report an issue</a>
+      </p>
+
+      <p class="muted">
+        Source:
+        <a href="https://github.com/coder-weez/emsChartsAssist"
+           target="_blank" rel="noopener">github.com/coder-weez/emsChartsAssist</a>
+      </p>
+    </div>
   </body>
 </html>

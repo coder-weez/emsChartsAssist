@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.headerTable').append('<button style="background:red;color:white;" class="chartfiller">AutoComplete</button>');
+    $('.headerTable').append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
         chrome.runtime.sendMessage({
@@ -42,6 +42,8 @@ $(document).ready(function() {
             }
             $('input[name=cv_comments]').val(cardiac_comments);
             $('input[name=RESP_COMMENTS]').val(resp_comments);
+
+            caFlash('input[name=cv_comments], input[name=RESP_COMMENTS], select[name=PULSE_CAROTID_R], select[name=PULSE_CAROTID], select[name=PULSE_RAD_R], select[name=PULSE_RAD_L], select[name=PULSE_FEM_R], select[name=PULSE_FEM_L], select[name=PULSE_DORS_R], select[name=PULSE_DORS_L]');
         });
     });
 });
