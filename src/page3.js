@@ -22,7 +22,9 @@ $(document).ready(function() {
                 stroke_scale: s["pg3_stroke_scale"],
                 gcs_eye: s["pg3_gcs_eye"],
                 gcs_verbal: s["pg3_gcs_verbal"],
-                gcs_motor: s["pg3_gcs_motor"]
+                gcs_motor: s["pg3_gcs_motor"],
+                pupil_size_l: s["pg3_pupil_size_l"],
+                pupil_size_r: s["pg3_pupil_size_r"]
             };
 
             var neuro_comments = response.neuro_comments;
@@ -30,14 +32,18 @@ $(document).ready(function() {
             var gcs_eye = response.gcs_eye;
             var gcs_verbal = response.gcs_verbal;
             var gcs_motor = response.gcs_motor;
+            var pupil_size_l = response.pupil_size_l;
+            var pupil_size_r = response.pupil_size_r;
 
             $('input[name=head_findings]').val(neuro_comments);
             $('select[name=stroke_scale]').val(stroke_scale);
             $('select[name=gcs_eye_1]').val(gcs_eye);
             $('select[name=gcs_verbal_1]').val(gcs_verbal);
             $('select[name=gcs_motor_1]').val(gcs_motor);
+            $('[name=pupil_size_l]').val(pupil_size_l);
+            $('[name=pupil_size_r]').val(pupil_size_r);
 
-            caFlash('input[name=head_findings], select[name=stroke_scale], select[name=gcs_eye_1], select[name=gcs_verbal_1], select[name=gcs_motor_1]');
+            caFlash('input[name=head_findings], select[name=stroke_scale], select[name=gcs_eye_1], select[name=gcs_verbal_1], select[name=gcs_motor_1], [name=pupil_size_l], [name=pupil_size_r]');
         });
     });
 });

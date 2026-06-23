@@ -1,5 +1,3 @@
-// TOADD: level of care per protocal -- dropdown
-// 
 $(document).ready(function() {
     caToolbar().append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
@@ -16,7 +14,8 @@ $(document).ready(function() {
                 from_truck: s["pg2_from_truck"],
                 position: s["pg2_position"],
                 first_on_scene: s["pg2_first_on_scene"],
-                stretcher_purpose: s["pg2_stretcher_purpose"]
+                stretcher_purpose: s["pg2_stretcher_purpose"],
+                level_care: s["pg2_level_care"]
             };
 
             var chief_complaint = response.chief_complaint;
@@ -30,6 +29,7 @@ $(document).ready(function() {
             var position = response.position;
             var first_on_scene = response.first_on_scene;
             var stretcher_purpose = response.stretcher_purpose;
+            var level_care = response.level_care;
             
             
             $('input[name=PRMAIN_ccduration]').val(cc_duration);
@@ -45,8 +45,9 @@ $(document).ready(function() {
             $('select[name=pt_moved_via]').val(to_truck);
             $('select[name=pt_position]').val(position);
             $('select[name=pt_moved_from]').val(from_truck);
+            $('[name=PRMAIN_level_care_per_protocol]').val(level_care);
 
-            caFlash('input[name=PRMAIN_ccduration], input[name=stretcher_purpose_descr], textarea[name=PRMAIN_cc], textarea[name=PRMAIN_hpi], textarea[name=PRMAIN_belongings], textarea[name=scene_description], select[name=PRMAIN_first_on_scene], select[name=PRMAIN_ccdurunits], select[name=pt_moved_via], select[name=pt_position], select[name=pt_moved_from]');
+            caFlash('input[name=PRMAIN_ccduration], input[name=stretcher_purpose_descr], textarea[name=PRMAIN_cc], textarea[name=PRMAIN_hpi], textarea[name=PRMAIN_belongings], textarea[name=scene_description], select[name=PRMAIN_first_on_scene], select[name=PRMAIN_ccdurunits], select[name=pt_moved_via], select[name=pt_position], select[name=pt_moved_from], [name=PRMAIN_level_care_per_protocol]');
         });
     });
 });

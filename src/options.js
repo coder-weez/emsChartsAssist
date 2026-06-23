@@ -30,6 +30,7 @@ var txtAreas = [
 ];
 var selBoxes = [
     "pg2_duration_units",
+    "pg2_level_care",
     "pg2_to_truck",
     "pg2_position",
     "pg2_from_truck",
@@ -37,6 +38,8 @@ var selBoxes = [
     "pg3_gcs_eye",
     "pg3_gcs_verbal",
     "pg3_gcs_motor",
+    "pg3_pupil_size_l",
+    "pg3_pupil_size_r",
     "pg4_radial_l",
     "pg4_radial_r",
     "pg4_fem_l",
