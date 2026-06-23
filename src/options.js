@@ -54,13 +54,13 @@ var selBoxes = [
 function _all_opts() {
     var opts = {};
     for (var i=0; i<txtInputs.length; i++) {
-	opts[ txtInputs[i] ] = "text";
+        opts[ txtInputs[i] ] = "text";
     }
     for (var i=0; i<txtAreas.length; i++) {
-	opts[ txtAreas[i] ] = "textarea";
+        opts[ txtAreas[i] ] = "textarea";
     }
     for (var i=0; i<selBoxes.length; i++) {
-	opts[ selBoxes[i] ] = "select";
+        opts[ selBoxes[i] ] = "select";
     }
     return opts;
 }
@@ -69,77 +69,148 @@ function get_user_values() {
     var vals = {};
     var opts = _all_opts();
     var keys = Object.keys(opts);
-    
+
     for (var i=0; i < keys.length; i++) {
-	var field_id = keys[i];
-	var field_type = opts[field_id];
-	if (typeof(field_id) == "undefined" || field_id == "undefined") continue;
-	console.debug("Getting user value for: " + field_id + "(" + field_type + ")")
+        var field_id = keys[i];
+        var field_type = opts[field_id];
+        if (typeof(field_id) == "undefined" || field_id == "undefined") continue;
+        console.debug("Getting user value for: " + field_id + "(" + field_type + ")")
 
-	var el = document.getElementById(field_id);
+        var el = document.getElementById(field_id);
 
-	if (field_type == "text" || field_type == "textarea") {
-	    vals[field_id] = el.value;
-	} else if (field_type == "select") {
-	    var ch = el.children[el.selectedIndex];
-	    if (typeof(ch) != "undefined") {
-		vals[field_id] = ch.value;
-	    }
-	} else {
-	    console.warn("Not sure what to do with field " + field_type + ":" + field_id)
-	}
+        if (field_type == "text" || field_type == "textarea") {
+            vals[field_id] = el.value;
+        } else if (field_type == "select") {
+            var ch = el.children[el.selectedIndex];
+            if (typeof(ch) != "undefined") {
+                vals[field_id] = ch.value;
+            }
+        } else {
+            console.warn("Not sure what to do with field " + field_type + ":" + field_id)
+        }
 
     }
     return vals;
 }
 
+function show_status(msg, isError) {
+    var status = document.getElementById("status");
+    status.innerHTML = msg;
+    status.className = isError ? "error" : "";
+    setTimeout(function() {
+        status.innerHTML = "";
+        status.className = "";
+    }, 2500);
+}
+
 function save_options() {
     var values = get_user_values();
-    var keys = Object.keys(values);
     console.info("Saving Values:");
     console.debug(values);
-    
+
     chrome.storage.sync.set(values, function() {
-	var status = document.getElementById("status");
-	status.innerHTML = "OPTIONS SAVED";
-	setTimeout(function() {
-            status.innerHTML = "";
-	}, 2000);
+        show_status("OPTIONS SAVED");
     });
 }
 
 function restore_options() {
     console.info("Restoring Options");
-    var vals = {};
     var opts = _all_opts();
     var opt_keys = Object.keys(opts);
 
     chrome.storage.sync.get(opt_keys, function(items) {
-	console.debug(items);
-	for (var i=0; i<opt_keys.length; i++) {
-	    var field_id = opt_keys[i];
-	    var field_type = opts[field_id];
-	    var user_val = items[field_id];
+        console.debug(items);
+        for (var i=0; i<opt_keys.length; i++) {
+            var field_id = opt_keys[i];
+            var field_type = opts[field_id];
+            var user_val = items[field_id];
 
-	    if (field_type == "text" || field_type == "textarea") {
-		document.getElementById(field_id).value = user_val;
-		    
-	    } else if (field_type == "select") {
-		var sbox = document.getElementById(field_id);
-		for (var j=0; j<sbox.children.length;j++) {
-		    if (sbox.children[j].value == user_val) {
-			sbox.selectedIndex = j;
-			break;
-		    }
-		}
-	    } else {
-		console.warn("I don't know what to do with " + field_type + ":" + field_id);
-	    }
-	}
+            if (field_type == "text" || field_type == "textarea") {
+                document.getElementById(field_id).value = user_val;
+
+            } else if (field_type == "select") {
+                var sbox = document.getElementById(field_id);
+                for (var j=0; j<sbox.children.length;j++) {
+                    if (sbox.children[j].value == user_val) {
+                        sbox.selectedIndex = j;
+                        break;
+                    }
+                }
+            } else {
+                console.warn("I don't know what to do with " + field_type + ":" + field_id);
+            }
+        }
     });
+}
 
-    return vals;
+// Download all saved defaults as a JSON file the user can back up or share.
+function export_options() {
+    chrome.storage.sync.get(null, function(items) {
+        var json = JSON.stringify(items, null, 2);
+        var blob = new Blob([json], { type: "application/json" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = "emscharts-assist-defaults.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+}
+
+// Load defaults from a previously exported JSON file.
+function import_options(ev) {
+    var file = ev.target.files[0];
+    ev.target.value = "";  // allow re-importing the same file later
+    if (!file) return;
+
+    var reader = new FileReader();
+    reader.onload = function() {
+        var data;
+        try {
+            data = JSON.parse(reader.result);
+        } catch (e) {
+            show_status("IMPORT FAILED: NOT VALID JSON", true);
+            return;
+        }
+        if (!data || typeof data != "object") {
+            show_status("IMPORT FAILED: UNRECOGNIZED FILE", true);
+            return;
+        }
+
+        // Only import keys this extension recognizes.
+        var opts = _all_opts();
+        var values = {};
+        var imported = 0;
+        Object.keys(data).forEach(function(k) {
+            if (opts.hasOwnProperty(k)) {
+                values[k] = data[k];
+                imported++;
+            }
+        });
+
+        if (imported == 0) {
+            show_status("IMPORT FAILED: NO RECOGNIZED SETTINGS", true);
+            return;
+        }
+
+        chrome.storage.sync.set(values, function() {
+            if (chrome.runtime.lastError) {
+                show_status("IMPORT FAILED: " + chrome.runtime.lastError.message, true);
+                return;
+            }
+            restore_options();
+            show_status("IMPORTED " + imported + " SETTINGS");
+        });
+    };
+    reader.readAsText(file);
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
 document.querySelector('#save').addEventListener('click', save_options);
+document.querySelector('#export').addEventListener('click', export_options);
+document.querySelector('#import-btn').addEventListener('click', function() {
+    document.getElementById('import-file').click();
+});
+document.querySelector('#import-file').addEventListener('change', import_options);

@@ -89,6 +89,25 @@
             #save:hover {
                 background: #1b7aa3;
             }
+            .btn-secondary {
+                padding: 8px 16px;
+                margin-left: 8px;
+                border: 1px solid #2191c0;
+                border-radius: 4px;
+                background: #fff;
+                color: #2191c0;
+                font-weight: bold;
+                font-size: 13px;
+                cursor: pointer;
+            }
+            .btn-secondary:hover {
+                background: #eaf5fa;
+            }
+            #status.error {
+                background: #f8d7da;
+                color: #721c24;
+                border-color: #f5c6cb;
+            }
             #status {
                 margin: 12px auto;
                 padding: 8px;
@@ -557,6 +576,9 @@
         <div id="status"></div>
         <div class="submit-row">
             <button id="save">Save</button>
+            <button id="export" type="button" class="btn-secondary">Export defaults</button>
+            <button id="import-btn" type="button" class="btn-secondary">Import defaults (.json)</button>
+            <input id="import-file" type="file" accept="application/json,.json" hidden>
         </div>
         <script src="options.js"></script>
     </body>

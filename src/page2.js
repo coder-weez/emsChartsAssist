@@ -3,9 +3,22 @@ $(document).ready(function() {
     $('.headerTable').append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
-        chrome.runtime.sendMessage({
-            greeting: "pg2"
-        }, function(response) {
+        chrome.storage.sync.get(null, function(s) {
+            var response = {
+                chief_complaint: s["pg2_chief_complaint"],
+                cc_duration: s["pg2_duration"],
+                als_assessment: s["pg2_als_assessment"],
+                cc_duration_units: s["pg2_duration_units"],
+                hpi: s["pg2_hpi"],
+                scene_description: s["pg2_scene_description"],
+                patient_belongings: s["pg2_belongings"],
+                to_truck: s["pg2_to_truck"],
+                from_truck: s["pg2_from_truck"],
+                position: s["pg2_position"],
+                first_on_scene: s["pg2_first_on_scene"],
+                stretcher_purpose: s["pg2_stretcher_purpose"]
+            };
+
             var chief_complaint = response.chief_complaint;
             var cc_duration = response.cc_duration;
             var als_assessment = response.als_assessment;
