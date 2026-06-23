@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Packaged extension build artifacts
+*.crx
+*.pem
+*.zip
+
+# Node
+node_modules/
+npm-debug.log*

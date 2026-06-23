@@ -1,6 +1,6 @@
 .DEFAULT_GOAL:=help
 .PHONY:
-PROJECT_NAME = chartfiller
+PROJECT_NAME = chartassist
 PWD=$(shell pwd)
 BUILD_DIR=$(PWD)/build
 SRC_DIR=$(PWD)/src

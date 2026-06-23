@@ -8,15 +8,19 @@ Chartfiller is a free extension for the Chrome browser which allows you to store
 > `chrome.storage.sync`, and the legacy `chrome.extension` messaging APIs have
 > been replaced with `chrome.runtime`. It works on current versions of Chrome,
 > which no longer load Manifest V2 extensions.
+>
+> **Dependencies:** The content scripts use jQuery 3.7.1. The Options page has
+> no third-party dependencies — its collapsible sections use native HTML
+> `<details>`/`<summary>` (the previous jQuery UI accordion was removed).
 
 
 ## Install from Source
 
-  1. `git clone git@github.com:cmattoon/chartfiller.git`
+  1. `git clone https://github.com/coder-weez/emsChartsAssist.git`
   2. Open `chrome://extensions/` in your browser
   3. Enable `Developer Mode` in the upper-right corner
   4. Select `Load Unpacked` in the upper-left corner
-  5. Find the `chartfiller` folder from the `git clone` step, and open the `src` directory
+  5. Find the `emsChartsAssist` folder from the `git clone` step, and open the `src` directory
 
 After loading, right-click the extension icon and choose **Options** to fill in
 your default values. These are saved to `chrome.storage.sync`.
@@ -34,7 +38,7 @@ Click it to fill the form fields with the defaults you saved in Options.
 If the AutoComplete button doesn't fill anything:
 
   1. Make sure you've saved defaults in the **Options** page first.
-  2. Open `chrome://extensions/`, find Chartfiller, and click the
+  2. Open `chrome://extensions/`, find **EMSCharts Filler**, and click the
      **service worker** link under "Inspect views" to view background errors.
   3. Reload the extension after making changes.
 
