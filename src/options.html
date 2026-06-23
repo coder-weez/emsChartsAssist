@@ -3,11 +3,17 @@
     <head>
         <meta charset="utf-8">
         <title>Chartfiller Defaults</title>
-        <script src="jquery-1.8.3.min.js"></script>
-        <script src="jquery-ui-1.9.2.custom.min.js"></script>
-        <script src="accordian.js"></script>
-        <link rel="stylesheet" type="text/css" href="jquery-ui-1.9.2.custom.min.css">
         <style type="text/css">
+            details {
+                border:1px solid #000;
+                margin:5px 0;
+            }
+            summary {
+                cursor:pointer;
+                padding:.5em .7em;
+                font-weight:bold;
+                background:#e6e6e6;
+            }
             .section {
                 width:480px;
                 border:1px solid #000;
@@ -61,10 +67,10 @@
     </head>
 
     <body>
-        <div id="accordion">
+        <div id="settings">
 
-            <h3>Page 2 Settings</h3>
-            <div>
+            <details open>
+            <summary>Page 2 Settings</summary>
                 <table>
                     <tr>
                         <td class="l">
@@ -197,9 +203,9 @@
                     </tr>                    
                 </table>
 
-            </div>
-            <h3>Page 3 Settings</h3>
-            <div>
+            </details>
+            <details>
+            <summary>Page 3 Settings</summary>
                 <table>
                     <tr>
                         <td class="l">
@@ -256,11 +262,9 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-
-
-            <h3>Page 4 Settings</h3>
-            <div>
+            </details>
+            <details>
+            <summary>Page 4 Settings</summary>
                 <table>
                     <tr>
                         <td class="l">
@@ -375,12 +379,9 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-
-
-
-            <h3>Page 5 Settings</h3>
-            <div>
+            </details>
+            <details>
+            <summary>Page 5 Settings</summary>
                 <table>
                     <tr>
                         <td class="l">
@@ -468,11 +469,9 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-
-
-            <h3>Page 8 Settings</h3>
-            <div>
+            </details>
+            <details>
+            <summary>Page 8 Settings</summary>
                 <table>
                     <tr>
                         <td class="l">
@@ -511,7 +510,7 @@
                         </td>
                     </tr>
                 </table>
-            </div>
+            </details>
         </div>
 
         <div id="status"></div>
