@@ -40,6 +40,8 @@ var selBoxes = [
     "pg3_gcs_motor",
     "pg3_pupil_size_l",
     "pg3_pupil_size_r",
+    "pg3_pupil_rx_l",
+    "pg3_pupil_rx_r",
     "pg4_radial_l",
     "pg4_radial_r",
     "pg4_fem_l",

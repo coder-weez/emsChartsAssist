@@ -3,13 +3,14 @@
 // right
 // comment box
 // brachial L & R
+// if element does not match options\has preexisting data, add to
+
 $(document).ready(function() {
     caToolbar().append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
         chrome.storage.sync.get(null, function(s) {
             var response = {
-                resp_comments: s["pg4_resp_comments"],
                 cardiac_comments: s["pg4_cardiac_comments"],
                 carotid_r: s["pg4_carotid_r"],
                 carotid_l: s["pg4_carotid_l"],
@@ -21,7 +22,6 @@ $(document).ready(function() {
                 dors_l: s["pg4_dors_l"]
             };
 
-            var resp_comments = response.resp_comments;
             var cardiac_comments = response.cardiac_comments;
             var carotid_r = response.carotid_r;
             var carotid_l = response.carotid_l;
@@ -57,9 +57,8 @@ $(document).ready(function() {
                 $('select[name=PULSE_DORS_L]').val(dors_l);
             }
             $('input[name=cv_comments]').val(cardiac_comments);
-            $('input[name=RESP_COMMENTS]').val(resp_comments);
 
-            caFlash('input[name=cv_comments], input[name=RESP_COMMENTS], select[name=PULSE_CAROTID_R], select[name=PULSE_CAROTID], select[name=PULSE_RAD_R], select[name=PULSE_RAD_L], select[name=PULSE_FEM_R], select[name=PULSE_FEM_L], select[name=PULSE_DORS_R], select[name=PULSE_DORS_L]');
+            caFlash('input[name=cv_comments], select[name=PULSE_CAROTID_R], select[name=PULSE_CAROTID], select[name=PULSE_RAD_R], select[name=PULSE_RAD_L], select[name=PULSE_FEM_R], select[name=PULSE_FEM_L], select[name=PULSE_DORS_R], select[name=PULSE_DORS_L]');
         });
     });
 });

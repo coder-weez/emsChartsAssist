@@ -2,7 +2,7 @@ $(document).ready(function() {
     caToolbar().addClass('ca-vertical');
     caToolbar().append('<button class="atref ca-btn">On Scene</button>');
     caToolbar().append('<button class="lvref ca-btn">Transport</button>');
-    caToolbar().append('<button class="atrec ca-btn">Hospital</button>');
+    caToolbar().append('<button class="atrec ca-btn">At Hospital</button>');
     caToolbar().append('<button class="can1 ca-btn">Refusal</button>');
     caToolbar().append('<button class="can2 ca-btn">Custom</button>');
 
