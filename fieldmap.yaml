@@ -86,13 +86,9 @@ fields:
 ###############################
 ## Page 3
 
-  - name: Neuro Comments
-    type: text
-    id: pg3_neuro_comments
-
   - name: Stroke Scale
     type: select
-    id: pg3_stroke_scale
+    id: stroke_scale
     options:
       _25: "Not Applicable"
       3275: "Cincinnati Negative"
@@ -101,21 +97,21 @@ fields:
 
   - name: GCS Eye
     type: select
-    id: pg3_gcs_eye
+    id: gcs_eye_1
     options:
       4: 4 - Spontaneous
       _: <None>
 
   - name: GCS Verbal
     type: select
-    id: pg3_gcs_verbal
+    id: gcs_verbal_1
     options:
       5: 5 - Oriented
       _: <None>
 
   - name: GCS Motor
     type: select
-    id: pg3_gcs_motor
+    id: gcs_motor_1
     options:
       6: 6 - Obeys Commands
       _: <None>

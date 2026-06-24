@@ -1,6 +1,9 @@
 # macOS
 .DS_Store
 
+# Claude Code local session data
+.claude/
+
 # Packaged extension build artifacts
 *.crx
 *.pem

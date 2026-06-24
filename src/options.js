@@ -1,10 +1,15 @@
 var txtInputs = [
     "pg2_duration",
     "pg2_stretcher_purpose",
-    "pg3_neuro_comments",
+    "pg3_pupil_comments",
+    "pg3_sensory_comments",
+    "pg3_motor_comments",
+    "pg3_airway_comments",
     "pg4_resp_comments",
     "pg4_cardiac_comments",
+    "pg4_breath_comments",
     "pg5_head_comments",
+    "pg5_trachea",
     "pg5_neck_comments",
     "pg5_chest_comments",
     "pg5_ap_appearance",
@@ -30,21 +35,39 @@ var txtAreas = [
 ];
 var selBoxes = [
     "pg2_duration_units",
+    "pg2_level_care",
     "pg2_to_truck",
     "pg2_position",
     "pg2_from_truck",
-    "pg3_stroke_scale",
-    "pg3_gcs_eye",
-    "pg3_gcs_verbal",
-    "pg3_gcs_motor",
+    "stroke_scale",
+    "gcs_eye_1",
+    "gcs_verbal_1",
+    "gcs_motor_1",
+    "pg3_pupil_size_l",
+    "pg3_pupil_size_r",
+    "pg3_pupil_rx_l",
+    "pg3_pupil_rx_r",
+    "pg3_motor_la",
+    "pg3_sensory_la",
+    "pg3_motor_ra",
+    "pg3_sensory_ra",
+    "pg3_motor_ll",
+    "pg3_sensory_ll",
+    "pg3_motor_rl",
+    "pg3_sensory_rl",
+    "pg3_airway_status",
+    "pg3_air_by",
+    "pg3_air_outcome",
+    "pg4_breath_sounds_l",
+    "pg4_breath_sounds_r",
+    "pg4_carotid_l",
+    "pg4_carotid_r",
     "pg4_radial_l",
     "pg4_radial_r",
     "pg4_fem_l",
     "pg4_fem_r",
-    "pg4_carotid_l",
-    "pg4_carotid_r",
-    "pg4_dors_l",
-    "pg4_dors_r",
+    "pg4_brachial_l",
+    "pg4_brachial_r",
     "pg2_to_truck",
     "pg2_duration_units",
     "pg2_first_on_scene"
@@ -76,6 +99,7 @@ function get_user_values() {
         console.debug("Getting user value for: " + field_id + "(" + field_type + ")")
 
         var el = document.getElementById(field_id);
+        if (!el) { console.warn("No element found for key: " + field_id); continue; }
 
         if (field_type == "text" || field_type == "textarea") {
             vals[field_id] = el.value;
@@ -124,11 +148,14 @@ function restore_options() {
             var field_type = opts[field_id];
             var user_val = items[field_id];
 
+            var elR = document.getElementById(field_id);
+            if (!elR) { console.warn("No element found for key: " + field_id); continue; }
+
             if (field_type == "text" || field_type == "textarea") {
-                document.getElementById(field_id).value = (user_val == null ? "" : user_val);
+                elR.value = (user_val == null ? "" : user_val);
 
             } else if (field_type == "select") {
-                var sbox = document.getElementById(field_id);
+                var sbox = elR;
                 for (var j=0; j<sbox.children.length;j++) {
                     if (sbox.children[j].value == user_val) {
                         sbox.selectedIndex = j;
@@ -222,8 +249,19 @@ function import_options(ev) {
     reader.readAsText(file);
 }
 
+function open_section_from_hash() {
+    var hash = window.location.hash;
+    if (!hash) return;
+    var target = document.querySelector(hash);
+    if (!target) return;
+    document.querySelectorAll('details').forEach(function(d) { d.open = false; });
+    target.open = true;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 document.addEventListener('DOMContentLoaded', restore_options);
 document.addEventListener('DOMContentLoaded', prune_stale_keys);
+document.addEventListener('DOMContentLoaded', open_section_from_hash);
 document.querySelector('#save').addEventListener('click', save_options);
 document.querySelector('#export').addEventListener('click', export_options);
 document.querySelector('#import-btn').addEventListener('click', function() {

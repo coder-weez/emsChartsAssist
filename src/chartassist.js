@@ -7,10 +7,20 @@
 function caToolbar() {
     var bar = jQuery('#ca-toolbar');
     if (!bar.length) {
-        bar = jQuery('<div id="ca-toolbar"></div>').appendTo('body');
+        bar = jQuery('<div id="ca-toolbar" class="ca-vertical"></div>').appendTo('body');
         var handle = jQuery('<div id="ca-drag" title="Drag to move">⠿</div>').appendTo(bar);
         caMakeDraggable(bar, handle);
         caRestorePosition(bar);
+        setTimeout(function() {
+            jQuery('<button class="ca-btn" style="font-size:11px;padding:3px 8px;opacity:0.85">Page Defaults</button>')
+                .appendTo(bar)
+                .on('click', function() {
+                    if (chrome.runtime && chrome.runtime.id) {
+                        var m = window.location.pathname.match(/page(\d+)\.cfm/i);
+                        chrome.runtime.sendMessage({ action: 'openOptions', page: m ? m[1] : null });
+                    }
+                });
+        }, 0);
     }
     return bar;
 }
@@ -75,4 +85,51 @@ function caFlash(selector) {
             el.css('background-color', '');
         }, 700);
     });
+}
+
+// Show a brief non-blocking notification at the bottom of the page.
+// Multiple calls stack vertically above the previous toast.
+function caToast(message) {
+    var container = jQuery('#ca-toast-container');
+    if (!container.length) {
+        container = jQuery('<div id="ca-toast-container"></div>').appendTo('body');
+    }
+    var toast = jQuery('<div class="ca-toast"></div>').text(message).appendTo(container);
+    setTimeout(function() { toast.addClass('ca-toast-show'); }, 10);
+    setTimeout(function() {
+        toast.removeClass('ca-toast-show');
+        setTimeout(function() {
+            toast.remove();
+            if (!container.children().length) { container.remove(); }
+        }, 300);
+    }, 6000);
+}
+
+// Fill a field with value.
+// Text inputs / textareas: appends to any existing content (space-separated).
+// Selects: skips and shows a toast if the field already has a value.
+// Flashes the field on success.
+function caFill(selector, value, friendlyName) {
+    var el = jQuery(selector);
+    if (!el.length || value === undefined || value === null || value === '') return;
+    var tag = (el.prop('tagName') || '').toLowerCase();
+    var type = (el.attr('type') || 'text').toLowerCase();
+    var isText = tag === 'textarea' || (tag === 'input' && type !== 'checkbox' && type !== 'radio' && type !== 'hidden');
+    if (isText) {
+        var current = (el.val() || '').trim();
+        if (current) {
+            el.val(current + ' ' + value);
+            caToast('"' + friendlyName + '" already had content — options default appended.');
+        } else {
+            el.val(value);
+        }
+    } else {
+        var existing = el.val();
+        if (existing !== null && existing !== '' && existing !== '0' && existing !== 'null') {
+            caToast('"' + friendlyName + '" was not updated — field already has content.');
+            return;
+        }
+        el.val(value);
+    }
+    caFlash(selector);
 }
