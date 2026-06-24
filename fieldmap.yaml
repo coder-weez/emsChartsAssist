@@ -54,7 +54,7 @@ fields:
     type: textarea
     id: pg2_belongings
 
-  - name: To ambulance via
+  - name: Moved to Vehicle Via
     type: select
     id: pg2_to_truck
     options:
@@ -62,7 +62,7 @@ fields:
       4865: Assist/Walk
       4885: Other
 
-  - name: Position in Ambulance
+  - name: Position in Vehicle
     type: select
     id: pg2_position
     options:
@@ -71,7 +71,7 @@ fields:
       4915: Sitting
       4920: Supine
 
-  - name: From ambulance via
+  - name: Moved From Vehicle Via
     type: select
     id: pg2_from_truck
     options:

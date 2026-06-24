@@ -16,7 +16,8 @@ $(document).ready(function() {
                 position: s["pg2_position"],
                 first_on_scene: s["pg2_first_on_scene"],
                 stretcher_purpose: s["pg2_stretcher_purpose"],
-                level_care: s["pg2_level_care"]
+                level_care: s["pg2_level_care"],
+                transassess: s["pg2_transassess"]
             };
 
             var chief_complaint = response.chief_complaint;
@@ -31,8 +32,9 @@ $(document).ready(function() {
             var first_on_scene = response.first_on_scene;
             var stretcher_purpose = response.stretcher_purpose;
             var level_care = response.level_care;
-            
-            
+            var transassess = response.transassess;
+
+
             caFill('textarea[name=PRMAIN_cc]', chief_complaint, 'Chief Complaint');
             caFill('input[name=PRMAIN_ccduration]', cc_duration, 'Duration');
             caFill('select[name=PRMAIN_ccdurunits]', cc_duration_units, 'Duration Units');
@@ -41,10 +43,11 @@ $(document).ready(function() {
             caFill('select[name=PRMAIN_first_on_scene]', first_on_scene, 'First On Scene');
             caFill('[name=PRMAIN_level_care_per_protocol]', level_care, 'Level of Care per Protocol');
             caFill('textarea[name=PRMAIN_belongings]', patient_belongings, 'Patient Belongings');
-            caFill('select[name=pt_moved_via]', to_truck, 'To Ambulance Via');
-            caFill('select[name=pt_position]', position, 'Position in Ambulance');
-            caFill('select[name=pt_moved_from]', from_truck, 'From Ambulance Via');
-            caFill('input[name=stretcher_purpose_descr]', stretcher_purpose, 'Stretcher Purpose');
+            caFillPopup('pt_moved_via', to_truck, 'Moved to Vehicle Via');
+            caFillPopup('pt_position', position, 'Position in Vehicle');
+            caFillPopup('pt_moved_from_multi', from_truck, 'Moved From Vehicle Via');
+            caFillPopup('transassess', transassess, 'Transport Assessment');
+            caFill('textarea[name=stretcher_purpose_descr]', stretcher_purpose, 'Stretcher Purpose');
         });
     });
 });

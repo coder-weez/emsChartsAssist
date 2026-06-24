@@ -105,6 +105,29 @@ function caToast(message) {
     }, 6000);
 }
 
+// Fill an EMSCharts popup multi-select field.
+// These fields store the selected text label in a hidden input ({fieldName}_text)
+// and display it in a span (#{fieldName}_htmlid) — there is no standard select element.
+function caFillPopup(fieldName, value, friendlyName) {
+    if (value === undefined || value === null || value === '') return;
+    var input = jQuery('input[name="' + fieldName + '_text"]');
+    if (!input.length) return;
+    var current = (input.val() || '').trim();
+    if (current) {
+        if (current.toLowerCase() === value.toLowerCase()) return;
+        caToast('"' + friendlyName + '" was not updated — field already has content.');
+        return;
+    }
+    input[0].value = value;
+    input.trigger('change');
+    var span = jQuery('#' + fieldName + '_htmlid');
+    if (span.length) {
+        span.text(value);
+        span.parent().find('[name="add"]').hide();
+    }
+    caFlash('input[name="' + fieldName + '_text"]');
+}
+
 // Fill a field with value.
 // Text inputs / textareas: appends to any existing content (space-separated).
 // Selects: skips and shows a toast if the field already has a value.
@@ -116,16 +139,19 @@ function caFill(selector, value, friendlyName) {
     var type = (el.attr('type') || 'text').toLowerCase();
     var isText = tag === 'textarea' || (tag === 'input' && type !== 'checkbox' && type !== 'radio' && type !== 'hidden');
     if (isText) {
-        var current = (el.val() || '').trim();
+        var current = ((el[0] && el[0].value) || '').trim();
+        var trimmedValue = value.trim();
         if (current) {
-            el.val(current + ' ' + value);
+            if (current.toLowerCase().indexOf(trimmedValue.toLowerCase()) !== -1) return;
+            el[0].value = current + ' ' + trimmedValue;
             caToast('"' + friendlyName + '" already had content — options default appended.');
         } else {
-            el.val(value);
+            el[0].value = trimmedValue;
         }
     } else {
         var existing = el.val();
         if (existing !== null && existing !== '' && existing !== '0' && existing !== 'null') {
+            if (existing === value) return;
             caToast('"' + friendlyName + '" was not updated — field already has content.');
             return;
         }
