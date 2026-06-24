@@ -60,7 +60,7 @@ Your defaults are saved with Chrome's built-in
     follow you to any Chrome where you're signed into the same profile with sync
     enabled (otherwise it behaves like local storage).
   * **Flat key/value layout.** Settings are stored as a single flat object whose
-    keys are page-prefixed strings (e.g. `pg2_chief_complaint`, `pg3_gcs_motor`).
+    keys are page-prefixed strings (e.g. `pg2_chief_complaint`, `gcs_motor_1`).
     Values are plain strings — either a field's text or a `<select>` option value.
   * **Size limits.** `storage.sync` allows roughly 100 KB total and ~8 KB per
     item; the short text defaults here stay well within that.

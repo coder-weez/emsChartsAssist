@@ -2,6 +2,7 @@ $(document).ready(function() {
     caToolbar().append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
     $('.chartfiller').click(function() {
+        if (!chrome.runtime || !chrome.runtime.id) return;
         chrome.storage.sync.get(null, function(s) {
             var response = {
                 chief_complaint: s["pg2_chief_complaint"],

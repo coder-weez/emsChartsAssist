@@ -129,7 +129,7 @@
         <p class="intro">Set the default values that the AutoComplete buttons fill into your EMSCharts PCRs.</p>
         <div id="settings">
 
-            <details open>
+            <details id="section-page2" open>
             <summary>Page 2 Settings</summary>
                 <table>
                     <tr>
@@ -263,27 +263,21 @@
                 </table>
 
             </details>
-            <details>
+            <details id="section-page3">
             <summary>Page 3 Settings</summary>
                 <table>
-                    <tr>
-                        <td class="l">
-                            Neuro comments
-                        </td>
-                        <td class="r">
-                            <input type="text" id="pg3_neuro_comments">
-                        </td>
-                    </tr>
                     <tr>
                         <td class="l">
                             Stroke Scale
                         </td>
                         <td class="r">
-                            <select id="pg3_stroke_scale">
-                                <option value="-25">Not Applicable</option>
-                                <option value="3275">Cincinnati Negative</option>
-                                <option value="3280">Cincinnati Inconclusive</option>
-                                <option value="3285">Cincinnati Positive</option>
+                            <select id="stroke_scale">
+                                <option value=""></option>				
+                                <option value="3275" scored="">Cincinnati (CPSS) Negative</option>															
+                                <option value="3280" scored="">Cincinnati (CPSS) Non-Conclusive</option>															
+                                <option value="3285" scored="">Cincinnati (CPSS) Positive</option>															
+                                <option value="1000" scored="">Cincinnati (CPSS) Refused</option>															
+                                <option value="1100" scored="">Cincinnati (CPSS) Unable To Complete</option>	
                             </select>
                         </td>
                     </tr>
@@ -291,10 +285,14 @@
                         <td class="l">
                             GCS Eye
                         </td>
-                        <td class="r">
-                            <select id="pg3_gcs_eye">
-                                <option value="4">4 - Spontaneous</option>
-                                <option value=""></option>
+                        <td class="r">                            
+                            <select id="gcs_eye_1">
+                                <option value="null"></option>
+                                <option value="4">4:Spontaneous</option>
+								<option value="3">3:To Sound</option>
+                                <option value="2">2:To Pressure</option>
+                                <option value="1">1:None</option>
+                                <option value="0">NT:Not Testable</option>                                                    
                             </select>
                         </td>
                     </tr>
@@ -303,9 +301,14 @@
                             GCS Verbal
                         </td>
                         <td class="r">
-                            <select id="pg3_gcs_verbal">
-                                <option value="5">5 - Oriented</option>
-                                <option value=""></option>
+                            <select id="gcs_verbal_1">
+                                <option value="null"></option>                               
+                                <option value="5">5:Oriented</option>
+                                <option value="4">4:Confused</option>
+                                <option value="3">3:Words</option>
+                                <option value="2">2:Sounds</option>
+                                <option value="1">1:None</option>
+                                <option value="0">NT:Not Testable</option>
                             </select>
                         </td>
                     </tr>
@@ -314,9 +317,15 @@
                             GCS Motor
                         </td>
                         <td class="r">
-                            <select id="pg3_gcs_motor">
-                                <option value="6">6 - Obeys Command</option>
-                                <option value=""></option>
+                            <select id="gcs_motor_1">
+                                <option value="null"></option>
+                                <option value="6">6:Obeys Command</option>
+                                <option value="5">5:Localizes</option>
+                                <option value="4">4:Normal Flexion</option>
+                                <option value="3">3:Abnormal Flexion</option>
+                                <option value="2">2:Extension</option>
+                                <option value="1">1:None</option>
+                                <option value="0">NT:Not Testable</option>
                             </select>
                         </td>
                     </tr>
@@ -498,116 +507,179 @@
                             <input type="text" id="pg3_motor_comments">
                         </td>
                     </tr>
+                    <tr>
+                        <td class="l" style="font-weight:bold">Airway</td>
+                        <td class="r"></td>
+                    </tr>
+                    <tr>
+                        <td class="l">Status</td>
+                        <td class="r">
+                            <select id="pg3_airway_status" style="width:160px">
+                                <option value=""></option>
+                                <option value="-1"> </option>
+                                <option value="2">Compromised</option>
+                                <option value="1">Patent</option>
+                                <option value="21">Secured / Intubated</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Comments</td>
+                        <td class="r">
+                            <input type="text" id="pg3_airway_comments">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Performed By</td>
+                        <td class="r">
+                            <select id="pg3_air_by" style="width:200px">
+                                <option value=""></option>
+                                <option value="1195">EMS Provider</option>
+                                <option value="1200">Law Enforcement</option>
+                                <option value="1205">Lay Person</option>
+                                <option value="1210">Other Healthcare Provider</option>
+                                <option value="1215">Patient</option>
+                                <option value="556000">Fire Personnel</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Outcome</td>
+                        <td class="r">
+                            <select id="pg3_air_outcome" style="width:160px">
+                                <option value=""></option>
+                                <option value="1220">Improved</option>
+                                <option value="1225">Unchanged</option>
+                                <option value="1230">Worse</option>
+                                <option value="-5">Not Available</option>
+                                <option value="-10">Not Known</option>
+                                <option value="-25">Not Applicable</option>
+                            </select>
+                        </td>
+                    </tr>
                 </table>
             </details>
-            <details>
+            <details id="section-page4">
             <summary>Page 4 Settings</summary>
                 <table>
                     <tr>
-                        <td class="l">
-                            Respiratory Comments
-                        </td>
+                        <td class="l">Respiratory Comments</td>
+                        <td class="r"><input type="text" id="pg4_resp_comments"></td>
+                    </tr>
+                    <tr>
+                        <td class="l">Cardiovascular Comments</td>
+                        <td class="r"><input type="text" id="pg4_cardiac_comments"></td>
+                    </tr>
+                    <tr>
+                        <td class="l"></td>
                         <td class="r">
-                            <input type="text" id="pg4_resp_comments">
+                            <span style="display:inline-block;width:150px;font-weight:bold">Left</span>
+                            <span style="display:inline-block;width:150px;margin-left:8px;font-weight:bold">Right</span>
                         </td>
                     </tr>
                     <tr>
-                        <td class="l">
-                            Cardiovascular Comments
-                        </td>
+                        <td class="l">Breath Sounds</td>
                         <td class="r">
-                            <input type="text" id="pg4_cardiac_comments">
-                        </td>
-                    </tr><tr>
-                        <td class="l">
-                            Radial (Left)
-                        </td>
-                        <td class="r">
-                            <select id="pg4_radial_l">
-                                <option value="1">Strong</option>
-                                <option value="22">Normal</option>
-                                <option value="4">Not Checked</option>
-                                <option value=""></option>
+                            <select id="pg4_breath_sounds_l" style="width:150px">
+                                <option value="0"></option>
+                                <option value="7">Absent</option>
+                                <option value="1">Clear</option>
+                                <option value="3">Coarse</option>
+                                <option value="2">Crackles</option>
+                                <option value="5">Decreased</option>
+                                <option value="10">Diminished</option>
+                                <option value="6">Diminished bases</option>
+                                <option value="8">Rales</option>
+                                <option value="9">Rhonchi</option>
+                                <option value="4">Wheeze</option>
+                            </select>
+                            <select id="pg4_breath_sounds_r" style="width:150px;margin-left:8px">
+                                <option value="0"></option>
+                                <option value="7">Absent</option>
+                                <option value="1">Clear</option>
+                                <option value="3">Coarse</option>
+                                <option value="2">Crackles</option>
+                                <option value="5">Decreased</option>
+                                <option value="10">Diminished</option>
+                                <option value="6">Diminished bases</option>
+                                <option value="8">Rales</option>
+                                <option value="9">Rhonchi</option>
+                                <option value="4">Wheeze</option>
                             </select>
                         </td>
-                    </tr><tr>
-                        <td class="l">
-                            Radial (Right)
-                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Breath Comments</td>
+                        <td class="r"><input type="text" id="pg4_breath_comments"></td>
+                    </tr>
+                    <tr>
+                        <td class="l"></td>
                         <td class="r">
-                            <select id="pg4_radial_r">
-                                <option value="1">Strong</option>
-                                <option value="22">Normal</option>
-                                <option value="4">Not Checked</option>
-                                <option value=""></option>
-                            </select>
+                            <span style="display:inline-block;width:150px;font-weight:bold">Left</span>
+                            <span style="display:inline-block;width:150px;margin-left:8px;font-weight:bold">Right</span>
                         </td>
-                    </tr><tr>
-                        <td class="l">
-                            Femoral (Left)
-                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Carotid</td>
                         <td class="r">
-                            <select id="pg4_fem_l">
-                                <option value=""></option>
-                                <option value="1">Strong</option>
-                                <option value="22">Normal</option>
-                                <option value="4">Not Checked</option>
-                            </select>
-                        </td>
-                    </tr><tr>
-                        <td class="l">
-                            Femoral (Right)
-                        </td>
-                        <td class="r">
-                            <select id="pg4_fem_r">
+                            <select id="pg4_carotid_l" style="width:150px">
                                 <option value=""></option>
                                 <option value="1">Strong</option>
                                 <option value="22">Normal</option>
                                 <option value="4">Not Checked</option>
                             </select>
-                        </td>
-                    </tr><tr>
-                        <td class="l">
-                            Carotid (Left)
-                        </td>
-                        <td class="r">
-                            <select id="pg4_carotid_l">
+                            <select id="pg4_carotid_r" style="width:150px;margin-left:8px">
                                 <option value=""></option>
                                 <option value="1">Strong</option>
                                 <option value="22">Normal</option>
                                 <option value="4">Not Checked</option>
                             </select>
                         </td>
-                    </tr><tr>
-                        <td class="l">
-                            Carotid (Right)
-                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Radial</td>
                         <td class="r">
-                            <select id="pg4_carotid_r">
+                            <select id="pg4_radial_l" style="width:150px">
+                                <option value=""></option>
+                                <option value="1">Strong</option>
+                                <option value="22">Normal</option>
+                                <option value="4">Not Checked</option>
+                            </select>
+                            <select id="pg4_radial_r" style="width:150px;margin-left:8px">
                                 <option value=""></option>
                                 <option value="1">Strong</option>
                                 <option value="22">Normal</option>
                                 <option value="4">Not Checked</option>
                             </select>
                         </td>
-                    </tr><tr>
-                        <td class="l">
-                            Dorsalis (Left)
-                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Brachial</td>
                         <td class="r">
-                            <select id="pg4_dors_l">
+                            <select id="pg4_brachial_l" style="width:150px">
+                                <option value=""></option>
+                                <option value="1">Strong</option>
+                                <option value="22">Normal</option>
+                                <option value="4">Not Checked</option>
+                            </select>
+                            <select id="pg4_brachial_r" style="width:150px;margin-left:8px">
                                 <option value=""></option>
                                 <option value="1">Strong</option>
                                 <option value="22">Normal</option>
                                 <option value="4">Not Checked</option>
                             </select>
                         </td>
-                    </tr><tr>
-                        <td class="l">
-                            Dorsalis (Right)
-                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Femoral</td>
                         <td class="r">
-                            <select id="pg4_dors_r">
+                            <select id="pg4_fem_l" style="width:150px">
+                                <option value=""></option>
+                                <option value="1">Strong</option>
+                                <option value="22">Normal</option>
+                                <option value="4">Not Checked</option>
+                            </select>
+                            <select id="pg4_fem_r" style="width:150px;margin-left:8px">
                                 <option value=""></option>
                                 <option value="1">Strong</option>
                                 <option value="22">Normal</option>
@@ -617,7 +689,7 @@
                     </tr>
                 </table>
             </details>
-            <details>
+            <details id="section-page5">
             <summary>Page 5 Settings</summary>
                 <table>
                     <tr>
@@ -634,80 +706,69 @@
                         <td class="r">
                             <input type="text" id="pg5_neck_comments">
                         </td>
-                    </tr><tr>
+                    </tr>
+                    <tr>
+                        <td class="l">Trachea</td>
+                        <td class="r">
+                            <select id="pg5_trachea">
+                                <option value="">Not Appreciated</option>
+                                <option value="M">Midline</option>
+                                <option value="R">Deviated to Right</option>
+                                <option value="L">Deviated to Left</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="l">
                             Chest Findings
                         </td>
                         <td class="r">
                             <input type="text" id="pg5_chest_comments">
                         </td>
-                    </tr><tr>
-                        <td class="l">
-                            Abdomen (Appearance)
-                        </td>
-                        <td class="r">
-                            <input type="text" id="pg5_ap_appearance">
-                        </td>
-                    </tr><tr>
-                        <td class="l">
-                            Abdomen (Palpation)
-                        </td>
-                        <td class="r">
-                            <input type="text" id="pg5_ap_palpation">
-                        </td>
-                    </tr><tr>
-                        <td class="l">
-                            Abdomen (Bowel Sounds)
-                        </td>
-                        <td class="r">
-                            <input type="text" id="pg5_ap_bowel_sounds">
-                        </td>
-                    </tr><tr>
-                        <td class="l">
-                            Abdomen (Comments)
-                        </td>
-                        <td class="r">
-                            <input type="text" id="pg5_ap_findings">
-                        </td>
-                    </tr><tr>
-                        <td class="l">
-                            Pelvis Findings
-                        </td>
-                        <td class="r">
-                            <input type="text" id="pg5_pelvis_comments">
-                        </td>
-                    </tr><tr>
-                        <td class="l">
-                            Back Findings
-                        </td>
-                        <td class="r">
-                            <input type="text" id="pg5_back_comments">
-                        </td>
-                    </tr><tr>
-                        <td class="l">
-                            Extremity Findings
-                        </td>
-                        <td class="r">
-                            <input type="text" id="pg5_ex_comments">
-                        </td>
-                    </tr><tr>
-                        <td class="l">
-                            Restraints
-                        </td>
-                        <td class="r">
-                            <input type="text" id="pg5_ex_restraints">
-                        </td>
-                    </tr><tr>
-                        <td class="l">
-                            Skin Findings
-                        </td>
-                        <td class="r">
-                            <input type="text" id="pg5_ex_skin_findings">
-                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Pelvis Findings</td>
+                        <td class="r"><input type="text" id="pg5_pelvis_comments"></td>
+                    </tr>
+                    <tr>
+                        <td class="l">Back Findings</td>
+                        <td class="r"><input type="text" id="pg5_back_comments"></td>
+                    </tr>
+                    <tr>
+                        <td class="l">Extremity Findings</td>
+                        <td class="r"><input type="text" id="pg5_ex_comments"></td>
+                    </tr>
+                    <tr>
+                        <td class="l">Restraints</td>
+                        <td class="r"><input type="text" id="pg5_ex_restraints"></td>
+                    </tr>
+                    <tr>
+                        <td class="l">Skin Findings</td>
+                        <td class="r"><input type="text" id="pg5_ex_skin_findings"></td>
+                    </tr>
+                    <tr>
+                        <td class="l" style="font-weight:bold">Abdomen</td>
+                        <td class="r"></td>
+                    </tr>
+                    <tr>
+                        <td class="l">Appearance</td>
+                        <td class="r"><input type="text" id="pg5_ap_appearance"></td>
+                    </tr>
+                    <tr>
+                        <td class="l">Palpation</td>
+                        <td class="r"><input type="text" id="pg5_ap_palpation"></td>
+                    </tr>
+                    <tr>
+                        <td class="l">Bowel Sounds</td>
+                        <td class="r"><input type="text" id="pg5_ap_bowel_sounds"></td>
+                    </tr>
+                    <tr>
+                        <td class="l">Comments</td>
+                        <td class="r"><input type="text" id="pg5_ap_findings"></td>
                     </tr>
                 </table>
             </details>
-            <details>
+            <details id="section-page8">
             <summary>Page 8 Settings</summary>
                 <table>
                     <tr>

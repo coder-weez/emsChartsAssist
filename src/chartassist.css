@@ -44,23 +44,35 @@
 .ca-btn:active {
     background: #115e59;
 }
-.ca-toast {
+#ca-toast-container {
     position: fixed;
     bottom: 16px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(50, 50, 50, 0.92);
-    color: #fff;
+    z-index: 2147483646;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    pointer-events: none;
+}
+.ca-toast {
+    background: #fef08a;
+    color: #713f12;
+    border: 1px solid #f59e0b;
     padding: 8px 14px;
     border-radius: 4px;
     font-size: 12px;
+    font-weight: bold;
     opacity: 0;
     transition: opacity 0.25s;
-    z-index: 2147483646;
     max-width: 380px;
     text-align: center;
     pointer-events: none;
     white-space: normal;
+}
+.ca-toast::before {
+    content: "⚠ ";
 }
 .ca-toast.ca-toast-show {
     opacity: 1;
