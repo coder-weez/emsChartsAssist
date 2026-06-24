@@ -103,6 +103,20 @@
             .btn-secondary:hover {
                 background: #eaf5fa;
             }
+            .btn-danger {
+                padding: 8px 16px;
+                margin-left: 8px;
+                border: 1px solid #dc2626;
+                border-radius: 4px;
+                background: #fff;
+                color: #dc2626;
+                font-weight: bold;
+                font-size: 13px;
+                cursor: pointer;
+            }
+            .btn-danger:hover {
+                background: #fef2f2;
+            }
             #status.error {
                 background: #f8d7da;
                 color: #721c24;
@@ -154,6 +168,7 @@
                         </td>
                         <td class="r">
                             <select id="pg2_duration_units">
+                                <option value=""></option>
                                 <option value="1235">Seconds</option>
                                 <option value="1240">Minutes</option>
                                 <option value="1245">Hours</option>
@@ -161,7 +176,6 @@
                                 <option value="1255">Weeks</option>
                                 <option value="1260">Months</option>
                                 <option value="1265">Years</option>
-                                <option value="0" disabled="disabled">Ever since my accident back in '74...</option>
                             </select>
                         </td>
                     </tr>
@@ -215,40 +229,88 @@
                         </td>
                     </tr>
                     <tr>
+                        <td class="l" style="font-weight:bold">Patient Movement</td>
+                        <td class="r"></td>
+                    </tr>
+                    <tr>
                         <td class="l">
-                            To ambulance via
+                            Moved to Vehicle Via
                         </td>
                         <td class="r">
                             <select id="pg2_to_truck">
-                                <option value="4880">Stretcher</option>
-                                <option value="4865">Assist/Walk</option>
-                                <option value="4885">Other</option>
-                                <option value="0" disabled="disabled">driveway, past three working vehicles</option>
+                                <option value=""></option>
+                                <option value="Assisted/Walk">Assisted/Walk</option>
+                                <option value="Backboard-Carry">Backboard-Carry</option>
+                                <option value="Carry">Carry</option>
+                                <option value="Chair">Chair</option>
+                                <option value="Not Applicable">Not Applicable</option>
+                                <option value="Not Available">Not Available</option>
+                                <option value="Not Known">Not Known</option>
+                                <option value="Other">Other</option>
+                                <option value="Stairchair">Stairchair</option>
+                                <option value="Stretcher">Stretcher</option>
+                                <option value="Wheelchair">Wheelchair</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td class="l">
-                            Position in ambulance
+                            Position in Vehicle
                         </td>
                         <td class="r">
                             <select id="pg2_position">
-                                <option value="4910">Semi-Fowlers</option>
-                                <option value="4895">Fowlers</option>
-                                <option value="4915">Sitting</option>
-                                <option value="4920">Supine</option>
+                                <option value=""></option>
+                                <option value="Ambulance Integrated Car Seat">Ambulance Integrated Car Seat</option>
+                                <option value="Car Seat">Car Seat</option>
+                                <option value="Fowlers">Fowlers</option>
+                                <option value="Lateral">Lateral</option>
+                                <option value="Lateral - Left">Lateral - Left</option>
+                                <option value="Lateral - Right">Lateral - Right</option>
+                                <option value="Neonatal Ambulance Restraint Device">Neonatal Ambulance Restraint Device</option>
+                                <option value="Not Applicable">Not Applicable</option>
+                                <option value="Not Available">Not Available</option>
+                                <option value="Not Known">Not Known</option>
+                                <option value="Other">Other</option>
+                                <option value="Patient's Car Seat">Patient's Car Seat</option>
+                                <option value="Pediatric Ambulance Restraint Device">Pediatric Ambulance Restraint Device</option>
+                                <option value="Prone">Prone</option>
+                                <option value="Semi-Fowlers">Semi-Fowlers</option>
+                                <option value="Sitting">Sitting</option>
+                                <option value="Supine">Supine</option>
+                                <option value="Trendelenburg">Trendelenburg</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td class="l">
-                            From ambulance via
+                            Moved From Vehicle Via
                         </td>
                         <td class="r">
                             <select id="pg2_from_truck">
-                                <option value="4930">Assist/Walk</option>
-                                <option value="4935">Stretcher</option>
-                                <option value="4951">Wheelchair</option>
+                                <option value=""></option>
+                                <option value="Assisted/Walk">Assisted/Walk</option>
+                                <option value="Backboard-Carry">Backboard-Carry</option>
+                                <option value="Carry">Carry</option>
+                                <option value="Chair">Chair</option>
+                                <option value="Not Applicable">Not Applicable</option>
+                                <option value="Not Available">Not Available</option>
+                                <option value="Not Known">Not Known</option>
+                                <option value="Other">Other</option>
+                                <option value="Stairchair">Stairchair</option>
+                                <option value="Stretcher">Stretcher</option>
+                                <option value="Wheelchair">Wheelchair</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Transport Assessment</td>
+                        <td class="r">
+                            <select id="pg2_transassess">
+                                <option value=""></option>
+                                <option value="Unable to sit without assistance">Unable to sit without assistance</option>
+                                <option value="Unable to stand without assistance">Unable to stand without assistance</option>
+                                <option value="Unable to walk without assistance">Unable to walk without assistance</option>
                             </select>
                         </td>
                     </tr>
@@ -259,7 +321,7 @@
                         <td class="r">
                             <input id="pg2_stretcher_purpose" type="text">
                         </td>
-                    </tr>                    
+                    </tr>
                 </table>
 
             </details>
@@ -816,6 +878,7 @@
             <button id="save">Save</button>
             <button id="export" type="button" class="btn-secondary">Export defaults</button>
             <button id="import-btn" type="button" class="btn-secondary">Import defaults (.json)</button>
+            <button id="reset" type="button" class="btn-danger">Reset</button>
             <input id="import-file" type="file" accept="application/json,.json" hidden>
         </div>
         <script src="options.js"></script>

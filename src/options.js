@@ -39,6 +39,7 @@ var selBoxes = [
     "pg2_to_truck",
     "pg2_position",
     "pg2_from_truck",
+    "pg2_transassess",
     "stroke_scale",
     "gcs_eye_1",
     "gcs_verbal_1",
@@ -114,6 +115,21 @@ function get_user_values() {
 
     }
     return vals;
+}
+
+function reset_options() {
+    if (!confirm('Clear all values? Click \'Save\' afterwards to apply the reset.')) return;
+    var opts = _all_opts();
+    Object.keys(opts).forEach(function(field_id) {
+        var el = document.getElementById(field_id);
+        if (!el) return;
+        if (opts[field_id] === 'select') {
+            el.selectedIndex = 0;
+        } else {
+            el.value = '';
+        }
+    });
+    show_status('ALL FIELDS CLEARED — click Save to apply');
 }
 
 function show_status(msg, isError) {
@@ -268,3 +284,4 @@ document.querySelector('#import-btn').addEventListener('click', function() {
     document.getElementById('import-file').click();
 });
 document.querySelector('#import-file').addEventListener('change', import_options);
+document.querySelector('#reset').addEventListener('click', reset_options);
