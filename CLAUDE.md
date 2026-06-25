@@ -46,8 +46,6 @@ For EMSCharts **popup multi-select** fields — these have no `<select>` element
 - Toast: yellow stacking notification, 6s, `⚠` prefix via CSS `::before`. Stacks vertically.
 - Flash: brief green background pulse on filled elements. Sets an inline `transition` style then clears both `transition` and `background-color` after the animation completes, leaving no residual inline styles.
 
-Page scripts accumulate return values from `caFill`/`caFillPopup` and call `caToast('Nothing to fill — …')` if every call returned `false`. This covers both "no defaults configured" and "all fields already match the defaults".
-
 ### `caToolbar()`
 Creates (once) a fixed-position draggable toolbar. Appends a "Page Defaults" button that sends `{ action: 'openOptions', page: N }` to the background service worker, which opens the options page scrolled to `#section-pageN`.
 
@@ -79,7 +77,7 @@ Storage keys follow the pattern `pg{N}_{fieldName}` (e.g. `pg2_chief_complaint`,
 ## Adding a new field — checklist
 1. **`options.html`**: add a `<tr>` with a label and the appropriate input/select/textarea. Use `id="pg{N}_{fieldName}"`.
 2. **`options.js`**: add the key to `txtInputs`, `txtAreas`, or `selBoxes`.
-3. **`page{N}.js`**: add a `caFill` or `caFillPopup` call inside the `chrome.storage.sync.get` callback, reading directly from `s["pg{N}_{fieldName}"]`. Accumulate the return value into `filled` so the "nothing to fill" toast fires correctly.
+3. **`page{N}.js`**: add a `caFill` or `caFillPopup` call inside the `chrome.storage.sync.get` callback, reading directly from `s["pg{N}_{fieldName}"]`.
 4. For popup fields: use text-label option values in `options.html`, not numeric IDs.
 
 ## Common pitfalls

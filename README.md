@@ -98,8 +98,7 @@ share a standard set with colleagues.
 
 If the AutoComplete button doesn't fill anything:
 
-  1. A **"Nothing to fill"** toast will appear if no defaults are configured or all fields already match your defaults — check the Options page to confirm your values are saved.
-  2. Make sure you've saved defaults in the **Options** page first.
+  1. Make sure you've saved defaults in the **Options** page first.
   2. Open a supported PCR page, then open Chrome's DevTools console
      (right-click the page &rarr; **Inspect** &rarr; **Console**) to check for
      any errors logged by the extension.
