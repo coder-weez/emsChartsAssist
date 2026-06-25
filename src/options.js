@@ -9,7 +9,6 @@ var txtInputs = [
     "pg4_cardiac_comments",
     "pg4_breath_comments",
     "pg5_head_comments",
-    "pg5_trachea",
     "pg5_neck_comments",
     "pg5_chest_comments",
     "pg5_ap_appearance",
@@ -69,8 +68,7 @@ var selBoxes = [
     "pg4_fem_r",
     "pg4_brachial_l",
     "pg4_brachial_r",
-    "pg2_to_truck",
-    "pg2_duration_units",
+    "pg5_trachea",
     "pg2_first_on_scene"
 ];
 

@@ -83,6 +83,7 @@ function caFlash(selector) {
         el.css({ transition: 'background-color .5s ease', backgroundColor: '#c8f7c5' });
         setTimeout(function() {
             el.css('background-color', '');
+            setTimeout(function() { el.css('transition', ''); }, 500);
         }, 700);
     });
 }
@@ -108,15 +109,16 @@ function caToast(message) {
 // Fill an EMSCharts popup multi-select field.
 // These fields store the selected text label in a hidden input ({fieldName}_text)
 // and display it in a span (#{fieldName}_htmlid) — there is no standard select element.
+// Returns true if anything visible happened (fill or toast), false for silent no-ops.
 function caFillPopup(fieldName, value, friendlyName) {
-    if (value === undefined || value === null || value === '') return;
+    if (value === undefined || value === null || value === '') return false;
     var input = jQuery('input[name="' + fieldName + '_text"]');
-    if (!input.length) return;
+    if (!input.length) return false;
     var current = (input.val() || '').trim();
     if (current) {
-        if (current.toLowerCase() === value.toLowerCase()) return;
+        if (current.toLowerCase() === value.toLowerCase()) return false;
         caToast('"' + friendlyName + '" was not updated — field already has content.');
-        return;
+        return true;
     }
     input[0].value = value;
     input.trigger('change');
@@ -126,15 +128,16 @@ function caFillPopup(fieldName, value, friendlyName) {
         span.parent().find('[name="add"]').hide();
     }
     caFlash('input[name="' + fieldName + '_text"]');
+    return true;
 }
 
 // Fill a field with value.
 // Text inputs / textareas: appends to any existing content (space-separated).
 // Selects: skips and shows a toast if the field already has a value.
-// Flashes the field on success.
+// Returns true if anything visible happened (fill or toast), false for silent no-ops.
 function caFill(selector, value, friendlyName) {
     var el = jQuery(selector);
-    if (!el.length || value === undefined || value === null || value === '') return;
+    if (!el.length || value === undefined || value === null || value === '') return false;
     var tag = (el.prop('tagName') || '').toLowerCase();
     var type = (el.attr('type') || 'text').toLowerCase();
     var isText = tag === 'textarea' || (tag === 'input' && type !== 'checkbox' && type !== 'radio' && type !== 'hidden');
@@ -142,7 +145,7 @@ function caFill(selector, value, friendlyName) {
         var current = ((el[0] && el[0].value) || '').trim();
         var trimmedValue = value.trim();
         if (current) {
-            if (current.toLowerCase().indexOf(trimmedValue.toLowerCase()) !== -1) return;
+            if (current.toLowerCase().indexOf(trimmedValue.toLowerCase()) !== -1) return false;
             el[0].value = current + ' ' + trimmedValue;
             caToast('"' + friendlyName + '" already had content — options default appended.');
         } else {
@@ -151,11 +154,12 @@ function caFill(selector, value, friendlyName) {
     } else {
         var existing = el.val();
         if (existing !== null && existing !== '' && existing !== '0' && existing !== 'null') {
-            if (existing === value) return;
+            if (existing === value) return false;
             caToast('"' + friendlyName + '" was not updated — field already has content.');
-            return;
+            return true;
         }
         el.val(value);
     }
     caFlash(selector);
+    return true;
 }
