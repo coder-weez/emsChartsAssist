@@ -17,11 +17,19 @@ guarantee the correctness or appropriateness of any data it enters. Use at your
 own risk; the software is provided "AS IS" without warranty of any kind (see
 [LICENSE.txt](LICENSE.txt)).
 
+**HIPAA notice:** This extension does not store, transmit, or process protected
+health information (PHI). Only the template default values you manually enter
+on the Options page are saved — no patient data, no PCR field values, and
+nothing from actual reports is ever read or retained by the extension.
+Compliance with HIPAA and your organization's privacy policies remains your
+responsibility when using EMSCharts and any tools that interact with it.
+
 
 > **Manifest V3:** This extension targets Chrome's Manifest V3. Defaults are
-> stored in `chrome.storage.sync` and read directly by the content scripts —
-> there is no background service worker or message passing. It works on current
-> versions of Chrome, which no longer load Manifest V2 extensions.
+> stored in `chrome.storage.sync` and read directly by the content scripts.
+> A minimal background service worker handles opening the Options page to the
+> correct section when the "Page Defaults" button is clicked. It works on
+> current versions of Chrome, which no longer load Manifest V2 extensions.
 >
 > **Dependencies:** The content scripts use jQuery 3.7.1. The Options page has
 > no third-party dependencies — its collapsible sections use native HTML
@@ -43,7 +51,7 @@ your default values. These are saved to `chrome.storage.sync`.
 ## Usage
 
 Open a patient care report on `emscharts.com`. On the supported pages
-(page 2, 3, 4, 5, and 8) a red **AutoComplete** button is added to the header.
+(page 2, 3, 4, 5, and 8) a teal **AutoComplete** button is added to the toolbar.
 Click it to fill the form fields with the defaults you saved in Options.
 
 
@@ -69,8 +77,7 @@ Your defaults are saved with Chrome's built-in
     the default fields.
 
 `options.js` writes the values and the page content scripts read them straight
-from `chrome.storage.sync` when an AutoComplete button is clicked (there is no
-background service worker).
+from `chrome.storage.sync` when an AutoComplete button is clicked.
 
 ### Back up, restore, or share your defaults
 
@@ -91,7 +98,8 @@ share a standard set with colleagues.
 
 If the AutoComplete button doesn't fill anything:
 
-  1. Make sure you've saved defaults in the **Options** page first.
+  1. A **"Nothing to fill"** toast will appear if no defaults are configured or all fields already match your defaults — check the Options page to confirm your values are saved.
+  2. Make sure you've saved defaults in the **Options** page first.
   2. Open a supported PCR page, then open Chrome's DevTools console
      (right-click the page &rarr; **Inspect** &rarr; **Console**) to check for
      any errors logged by the extension.
