@@ -1,3 +1,6 @@
+// trauma
+// medical
+// refusal
 $(document).ready(function() {
     caToolbar().append('<button class="chartfiller ca-btn">AutoComplete</button>');
 
