@@ -19,8 +19,7 @@
         "open_in_tab": true
     },
     "permissions": [
-        "storage",
-        "tabs"
+        "storage"
     ],
     "host_permissions": [
         "https://*.emscharts.com/pr/*"

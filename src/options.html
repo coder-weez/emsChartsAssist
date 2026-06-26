@@ -9,7 +9,7 @@
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: 13px;
                 color: #222;
-                max-width: 640px;
+                max-width: 760px;
                 margin: 0 auto;
                 padding: 16px;
             }
@@ -756,24 +756,45 @@
             <summary>Page 5 Settings</summary>
                 <table>
                     <tr>
-                        <td class="l">
-                            Head Findings
-                        </td>
+                        <td class="l"></td>
                         <td class="r">
-                            <input type="text" id="pg5_head_comments">
+                            <span style="display:inline-block;width:160px;font-weight:bold">Trauma</span>
+                            <span style="display:inline-block;width:160px;margin-left:8px;font-weight:bold">Medical</span>
+                            <span style="display:inline-block;width:160px;margin-left:8px;font-weight:bold">Refusal</span>
                         </td>
-                    </tr><tr>
-                        <td class="l">
-                            Neck Findings
-                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Head Findings</td>
                         <td class="r">
-                            <input type="text" id="pg5_neck_comments">
+                            <input type="text" id="pg5_trauma_head_comments" style="width:160px">
+                            <input type="text" id="pg5_medical_head_comments" style="width:160px;margin-left:8px">
+                            <input type="text" id="pg5_refusal_head_comments" style="width:160px;margin-left:8px">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l">Neck Findings</td>
+                        <td class="r">
+                            <input type="text" id="pg5_trauma_neck_comments" style="width:160px">
+                            <input type="text" id="pg5_medical_neck_comments" style="width:160px;margin-left:8px">
+                            <input type="text" id="pg5_refusal_neck_comments" style="width:160px;margin-left:8px">
                         </td>
                     </tr>
                     <tr>
                         <td class="l">Trachea</td>
                         <td class="r">
-                            <select id="pg5_trachea">
+                            <select id="pg5_trauma_trachea" style="width:160px">
+                                <option value="">Not Appreciated</option>
+                                <option value="M">Midline</option>
+                                <option value="R">Deviated to Right</option>
+                                <option value="L">Deviated to Left</option>
+                            </select>
+                            <select id="pg5_medical_trachea" style="width:160px;margin-left:8px">
+                                <option value="">Not Appreciated</option>
+                                <option value="M">Midline</option>
+                                <option value="R">Deviated to Right</option>
+                                <option value="L">Deviated to Left</option>
+                            </select>
+                            <select id="pg5_refusal_trachea" style="width:160px;margin-left:8px">
                                 <option value="">Not Appreciated</option>
                                 <option value="M">Midline</option>
                                 <option value="R">Deviated to Right</option>
@@ -782,32 +803,52 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="l">
-                            Chest Findings
-                        </td>
+                        <td class="l">Chest Findings</td>
                         <td class="r">
-                            <input type="text" id="pg5_chest_comments">
+                            <input type="text" id="pg5_trauma_chest_comments" style="width:160px">
+                            <input type="text" id="pg5_medical_chest_comments" style="width:160px;margin-left:8px">
+                            <input type="text" id="pg5_refusal_chest_comments" style="width:160px;margin-left:8px">
                         </td>
                     </tr>
                     <tr>
                         <td class="l">Pelvis Findings</td>
-                        <td class="r"><input type="text" id="pg5_pelvis_comments"></td>
+                        <td class="r">
+                            <input type="text" id="pg5_trauma_pelvis_comments" style="width:160px">
+                            <input type="text" id="pg5_medical_pelvis_comments" style="width:160px;margin-left:8px">
+                            <input type="text" id="pg5_refusal_pelvis_comments" style="width:160px;margin-left:8px">
+                        </td>
                     </tr>
                     <tr>
                         <td class="l">Back Findings</td>
-                        <td class="r"><input type="text" id="pg5_back_comments"></td>
+                        <td class="r">
+                            <input type="text" id="pg5_trauma_back_comments" style="width:160px">
+                            <input type="text" id="pg5_medical_back_comments" style="width:160px;margin-left:8px">
+                            <input type="text" id="pg5_refusal_back_comments" style="width:160px;margin-left:8px">
+                        </td>
                     </tr>
                     <tr>
                         <td class="l">Extremity Findings</td>
-                        <td class="r"><input type="text" id="pg5_ex_comments"></td>
+                        <td class="r">
+                            <input type="text" id="pg5_trauma_ex_comments" style="width:160px">
+                            <input type="text" id="pg5_medical_ex_comments" style="width:160px;margin-left:8px">
+                            <input type="text" id="pg5_refusal_ex_comments" style="width:160px;margin-left:8px">
+                        </td>
                     </tr>
                     <tr>
                         <td class="l">Restraints</td>
-                        <td class="r"><input type="text" id="pg5_ex_restraints"></td>
+                        <td class="r">
+                            <input type="text" id="pg5_trauma_ex_restraints" style="width:160px">
+                            <input type="text" id="pg5_medical_ex_restraints" style="width:160px;margin-left:8px">
+                            <input type="text" id="pg5_refusal_ex_restraints" style="width:160px;margin-left:8px">
+                        </td>
                     </tr>
                     <tr>
                         <td class="l">Skin Findings</td>
-                        <td class="r"><input type="text" id="pg5_ex_skin_findings"></td>
+                        <td class="r">
+                            <input type="text" id="pg5_trauma_ex_skin_findings" style="width:160px">
+                            <input type="text" id="pg5_medical_ex_skin_findings" style="width:160px;margin-left:8px">
+                            <input type="text" id="pg5_refusal_ex_skin_findings" style="width:160px;margin-left:8px">
+                        </td>
                     </tr>
                     <tr>
                         <td class="l" style="font-weight:bold">Abdomen</td>
@@ -815,19 +856,35 @@
                     </tr>
                     <tr>
                         <td class="l">Appearance</td>
-                        <td class="r"><input type="text" id="pg5_ap_appearance"></td>
+                        <td class="r">
+                            <input type="text" id="pg5_trauma_ap_appearance" style="width:160px">
+                            <input type="text" id="pg5_medical_ap_appearance" style="width:160px;margin-left:8px">
+                            <input type="text" id="pg5_refusal_ap_appearance" style="width:160px;margin-left:8px">
+                        </td>
                     </tr>
                     <tr>
                         <td class="l">Palpation</td>
-                        <td class="r"><input type="text" id="pg5_ap_palpation"></td>
+                        <td class="r">
+                            <input type="text" id="pg5_trauma_ap_palpation" style="width:160px">
+                            <input type="text" id="pg5_medical_ap_palpation" style="width:160px;margin-left:8px">
+                            <input type="text" id="pg5_refusal_ap_palpation" style="width:160px;margin-left:8px">
+                        </td>
                     </tr>
                     <tr>
                         <td class="l">Bowel Sounds</td>
-                        <td class="r"><input type="text" id="pg5_ap_bowel_sounds"></td>
+                        <td class="r">
+                            <input type="text" id="pg5_trauma_ap_bowel_sounds" style="width:160px">
+                            <input type="text" id="pg5_medical_ap_bowel_sounds" style="width:160px;margin-left:8px">
+                            <input type="text" id="pg5_refusal_ap_bowel_sounds" style="width:160px;margin-left:8px">
+                        </td>
                     </tr>
                     <tr>
                         <td class="l">Comments</td>
-                        <td class="r"><input type="text" id="pg5_ap_findings"></td>
+                        <td class="r">
+                            <input type="text" id="pg5_trauma_ap_findings" style="width:160px">
+                            <input type="text" id="pg5_medical_ap_findings" style="width:160px;margin-left:8px">
+                            <input type="text" id="pg5_refusal_ap_findings" style="width:160px;margin-left:8px">
+                        </td>
                     </tr>
                 </table>
             </details>
