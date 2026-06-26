@@ -2,6 +2,8 @@
 
 > **Keep this file and `README.md` up to date.** When behaviour, architecture, or helper APIs change, update both documents in the same commit. CLAUDE.md is the technical reference for contributors and AI assistants; README.md is the user-facing reference. Neither should drift from the actual code.
 
+> **Versioning:** bump `version` and `version_name` in `manifest.json` before publishing to the Chrome Web Store — Chrome rejects uploads where the version hasn't changed. Use semantic versioning: patch (`0.x.x.1`) for bug fixes, minor (`0.x+1.0.0`) for new features, major (`1.0.0.0`) for breaking changes. After merging to `main`, tag the commit to match (e.g. `git tag v0.4.0`). Tags live on `main`; don't tag feature branches.
+
 ## What this project is
 
 A Chrome MV3 extension that injects an **AutoComplete** toolbar button into EMSCharts PCR pages. Clicking it reads user-configured defaults from `chrome.storage.sync` and fills in matching form fields. No patient data is ever stored or transmitted.
