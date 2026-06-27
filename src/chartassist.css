@@ -44,6 +44,16 @@
 .ca-btn:active {
     background: #115e59;
 }
+.ca-btn-danger {
+    background: #facc15;
+    color: #fff;
+}
+.ca-btn-danger:hover {
+    background: #eab308;
+}
+.ca-btn-danger:active {
+    background: #ca8a04;
+}
 #ca-toast-container {
     position: fixed;
     bottom: 16px;

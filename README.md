@@ -51,8 +51,10 @@ your default values. These are saved to `chrome.storage.sync`.
 ## Usage
 
 Open a patient care report on `emscharts.com`. On the supported pages
-(page 2, 3, 4, 5, and 8) a teal **AutoComplete** button is added to the toolbar.
-Click it to fill the form fields with the defaults you saved in Options.
+(page 2, 3, 4, 5, and 8) the extension adds a toolbar with two buttons:
+
+- **AutoComplete** (teal) — fills form fields with the defaults you saved in Options.
+- **Clear Fields** (yellow) — blanks out any fields the extension knows about on that page. Asks for confirmation before clearing.
 
 
 ## How settings are stored

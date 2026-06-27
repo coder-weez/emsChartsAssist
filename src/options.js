@@ -45,6 +45,12 @@ var txtInputs = [
     "pg5_refusal_ex_restraints",
     "pg5_refusal_ex_skin_findings"
 ];
+var pertNegGroups = [
+    "pg3_mental_present",
+    "pg3_mental_not_present",
+    "pg3_neuro_present",
+    "pg3_neuro_not_present"
+];
 var txtAreas = [
     "pg2_chief_complaint",
     "pg2_hpi",
@@ -109,6 +115,9 @@ function _all_opts() {
     for (var i=0; i<selBoxes.length; i++) {
         opts[ selBoxes[i] ] = "select";
     }
+    for (var i=0; i<pertNegGroups.length; i++) {
+        opts[ pertNegGroups[i] ] = "checkgroup";
+    }
     return opts;
 }
 
@@ -122,6 +131,14 @@ function get_user_values() {
         var field_type = opts[field_id];
         if (typeof(field_id) == "undefined" || field_id == "undefined") continue;
         console.debug("Getting user value for: " + field_id + "(" + field_type + ")")
+
+        if (field_type == "checkgroup") {
+            var checked = document.querySelectorAll('[data-group="' + field_id + '"]:checked');
+            var cbVals = [];
+            for (var j=0; j<checked.length; j++) { cbVals.push(checked[j].value); }
+            vals[field_id] = cbVals.join(',');
+            continue;
+        }
 
         var el = document.getElementById(field_id);
         if (!el) { console.warn("No element found for key: " + field_id); continue; }
@@ -145,6 +162,11 @@ function reset_options() {
     if (!confirm('Clear all values? Click \'Save\' afterwards to apply the reset.')) return;
     var opts = _all_opts();
     Object.keys(opts).forEach(function(field_id) {
+        if (opts[field_id] === 'checkgroup') {
+            var boxes = document.querySelectorAll('[data-group="' + field_id + '"]');
+            for (var j=0; j<boxes.length; j++) { boxes[j].checked = false; }
+            return;
+        }
         var el = document.getElementById(field_id);
         if (!el) return;
         if (opts[field_id] === 'select') {
@@ -187,6 +209,15 @@ function restore_options() {
             var field_id = opt_keys[i];
             var field_type = opts[field_id];
             var user_val = items[field_id];
+
+            if (field_type == "checkgroup") {
+                var selected = (user_val || '').split(',');
+                var boxes = document.querySelectorAll('[data-group="' + field_id + '"]');
+                for (var j=0; j<boxes.length; j++) {
+                    boxes[j].checked = selected.indexOf(boxes[j].value) !== -1;
+                }
+                continue;
+            }
 
             var elR = document.getElementById(field_id);
             if (!elR) { console.warn("No element found for key: " + field_id); continue; }
@@ -299,9 +330,33 @@ function open_section_from_hash() {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+function wire_pertneg_mutex() {
+    var pairs = [
+        ['pg3_mental_present',  'pg3_mental_not_present'],
+        ['pg3_neuro_present',   'pg3_neuro_not_present']
+    ];
+    pairs.forEach(function(pair) {
+        pair.forEach(function(group, i) {
+            var opposite = pair[1 - i];
+            var boxes = document.querySelectorAll('[data-group="' + group + '"]');
+            for (var j = 0; j < boxes.length; j++) {
+                boxes[j].addEventListener('change', function() {
+                    if (!this.checked) return;
+                    var val = this.value;
+                    var others = document.querySelectorAll('[data-group="' + opposite + '"]');
+                    for (var k = 0; k < others.length; k++) {
+                        if (others[k].value === val) { others[k].checked = false; break; }
+                    }
+                });
+            }
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', restore_options);
 document.addEventListener('DOMContentLoaded', prune_stale_keys);
 document.addEventListener('DOMContentLoaded', open_section_from_hash);
+document.addEventListener('DOMContentLoaded', wire_pertneg_mutex);
 document.querySelector('#save').addEventListener('click', save_options);
 document.querySelector('#export').addEventListener('click', export_options);
 document.querySelector('#import-btn').addEventListener('click', function() {
