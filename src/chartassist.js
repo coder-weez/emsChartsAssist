@@ -131,6 +131,77 @@ function caFillPopup(fieldName, value, friendlyName) {
     return true;
 }
 
+// Clear a text/textarea/select field back to blank.
+function caClrField(selector) {
+    var el = jQuery(selector);
+    if (!el.length) return;
+    var tag = (el.prop('tagName') || '').toLowerCase();
+    var type = (el.attr('type') || 'text').toLowerCase();
+    var isText = tag === 'textarea' || (tag === 'input' && type !== 'checkbox' && type !== 'radio' && type !== 'hidden');
+    if (isText) {
+        el[0].value = '';
+    } else {
+        el.val('');
+    }
+}
+
+// Clear an EMSCharts popup multi-select field (companion to caFillPopup).
+function caClrPopup(fieldName) {
+    var input = jQuery('input[name="' + fieldName + '_text"]');
+    if (!input.length) return;
+    input[0].value = '';
+    input.trigger('change');
+    var span = jQuery('#' + fieldName + '_htmlid');
+    if (span.length) {
+        span.text('');
+        span.parent().find('[name="add"]').show();
+    }
+}
+
+// Fill an EMSCharts "pertneg" multi-select field (Mental / Neurological exam sections).
+// These fields display selected text in a span.pcr-multi-pick-list inside a div, and
+// store the text label in a hidden input whose name is derived by stripping "_id" from divId
+// (e.g. divId "mental_text_id" → input[name="mental_text"]).
+// value should be comma-separated text labels (e.g. "Oriented-Person,Oriented-Place").
+// Returns true if anything visible happened, false for silent no-ops.
+function caFillPertNeg(divId, value, friendlyName) {
+    if (value === undefined || value === null || value === '') return false;
+    var div = jQuery('#' + divId);
+    if (!div.length) return false;
+    var span = div.find('span.pcr-multi-pick-list');
+    if (!span.length) return false;
+    var current = span.text().trim();
+    if (current) {
+        if (current.toLowerCase() === value.toLowerCase()) return false;
+        caToast('"' + friendlyName + '" was not updated — field already has content.');
+        return true;
+    }
+    var inputName = divId.replace(/_id$/, '');
+    var hidden = jQuery('input[name="' + inputName + '"]');
+    if (hidden.length) {
+        hidden[0].value = value;
+        hidden.trigger('change');
+    }
+    span.text(value);
+    div.find('.add-multi-pick-button').hide();
+    caFlash('#' + divId + ' span');
+    return true;
+}
+
+// Clear an EMSCharts "pertneg" multi-select field (companion to caFillPertNeg).
+function caClrPertNeg(divId) {
+    var div = jQuery('#' + divId);
+    if (!div.length) return;
+    var inputName = divId.replace(/_id$/, '');
+    var hidden = jQuery('input[name="' + inputName + '"]');
+    if (hidden.length) {
+        hidden[0].value = '';
+        hidden.trigger('change');
+    }
+    div.find('span.pcr-multi-pick-list').text('');
+    div.find('.add-multi-pick-button').show();
+}
+
 // Fill a field with value.
 // Text inputs / textareas: appends to any existing content (space-separated).
 // Selects: skips and shows a toast if the field already has a value.
@@ -152,6 +223,7 @@ function caFill(selector, value, friendlyName) {
             el[0].value = trimmedValue;
         }
     } else {
+        if (value === '0' || value === 'null') return false;
         var existing = el.val();
         if (existing !== null && existing !== '' && existing !== '0' && existing !== 'null') {
             if (existing === value) return false;

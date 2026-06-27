@@ -2,6 +2,25 @@ $(document).ready(function() {
     caToolbar().append('<button class="pg5trauma ca-btn">Trauma</button>');
     caToolbar().append('<button class="pg5medical ca-btn">Medical</button>');
     caToolbar().append('<button class="pg5refusal ca-btn">Refusal</button>');
+    caToolbar().append('<button class="ca-clear ca-btn ca-btn-danger">Clear Fields</button>');
+
+    $('.ca-clear').click(function() {
+        if (!chrome.runtime || !chrome.runtime.id) return;
+        if (!window.confirm('Clear all auto-filled fields on this page? This cannot be undone.')) return;
+        caClrField('input[name=head_comments]');
+        caClrField('input[name=neck_comments]');
+        caClrField('select[name=trachea]');
+        caClrField('input[name=chest_comments]');
+        caClrField('input[name=ap_appearance]');
+        caClrField('input[name=ap_palpation]');
+        caClrField('input[name=ap_bowel_sounds]');
+        caClrField('input[name=ap_findings]');
+        caClrField('input[name=pelvis_comments]');
+        caClrField('input[name=back_comments]');
+        caClrField('input[name=ex_comments]');
+        caClrField('input[name=ex_restraints]');
+        caClrField('input[name=ex_skin_findings]');
+    });
 
     function fillPage5(prefix) {
         chrome.storage.sync.get(null, function(s) {

@@ -1,5 +1,24 @@
 $(document).ready(function() {
     caToolbar().append('<button class="chartfiller ca-btn">AutoComplete</button>');
+    caToolbar().append('<button class="ca-clear ca-btn ca-btn-danger">Clear Fields</button>');
+
+    $('.ca-clear').click(function() {
+        if (!chrome.runtime || !chrome.runtime.id) return;
+        if (!window.confirm('Clear all auto-filled fields on this page? This cannot be undone.')) return;
+        caClrField('textarea[name=PRMAIN_cc]');
+        caClrField('input[name=PRMAIN_ccduration]');
+        caClrField('select[name=PRMAIN_ccdurunits]');
+        caClrField('textarea[name=PRMAIN_hpi]');
+        caClrField('textarea[name=scene_description]');
+        caClrField('select[name=PRMAIN_first_on_scene]');
+        caClrField('[name=PRMAIN_level_care_per_protocol]');
+        caClrField('textarea[name=PRMAIN_belongings]');
+        caClrPopup('pt_moved_via');
+        caClrPopup('pt_position');
+        caClrPopup('pt_moved_from_multi');
+        caClrPopup('transassess');
+        caClrField('textarea[name=stretcher_purpose_descr]');
+    });
 
     $('.chartfiller').click(function() {
         if (!chrome.runtime || !chrome.runtime.id) return;

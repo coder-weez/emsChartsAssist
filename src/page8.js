@@ -4,6 +4,13 @@ $(document).ready(function() {
     caToolbar().append('<button class="atrec ca-btn">At Hospital</button>');
     caToolbar().append('<button class="can1 ca-btn">Refusal</button>');
     caToolbar().append('<button class="can2 ca-btn">Custom</button>');
+    caToolbar().append('<button class="ca-clear ca-btn ca-btn-danger">Clear Fields</button>');
+
+    $('.ca-clear').click(function() {
+        if (!chrome.runtime || !chrome.runtime.id) return;
+        if (!window.confirm('Clear all auto-filled fields on this page? This cannot be undone.')) return;
+        caClrField('textarea[name=vs_comment]');
+    });
 
     $('.atref').click(function() {
         if (!chrome.runtime || !chrome.runtime.id) return;

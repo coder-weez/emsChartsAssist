@@ -1,5 +1,24 @@
 $(document).ready(function() {
     caToolbar().append('<button class="chartfiller ca-btn">AutoComplete</button>');
+    caToolbar().append('<button class="ca-clear ca-btn ca-btn-danger">Clear Fields</button>');
+
+    $('.ca-clear').click(function() {
+        if (!chrome.runtime || !chrome.runtime.id) return;
+        if (!window.confirm('Clear all auto-filled fields on this page? This cannot be undone.')) return;
+        caClrField('textarea[name=RESP_COMMENTS]');
+        caClrField('select[name=cv_breath_sounds_l]');
+        caClrField('select[name=cv_breath_sounds_r]');
+        caClrField('[name=cv_breath_comments]');
+        caClrField('select[name=PULSE_CAROTID]');
+        caClrField('select[name=PULSE_CAROTID_R]');
+        caClrField('select[name=PULSE_RAD_L]');
+        caClrField('select[name=PULSE_RAD_R]');
+        caClrField('select[name=PULSE_BRA_L]');
+        caClrField('select[name=PULSE_BRA_R]');
+        caClrField('select[name=PULSE_FEM_L]');
+        caClrField('select[name=PULSE_FEM_R]');
+        caClrField('input[name=cv_comments]');
+    });
 
     $('.chartfiller').click(function() {
         if (!chrome.runtime || !chrome.runtime.id) return;
