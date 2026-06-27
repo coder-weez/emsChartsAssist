@@ -141,7 +141,7 @@ function caClrField(selector) {
     if (isText) {
         el[0].value = '';
     } else {
-        el.val('');
+        el.prop('selectedIndex', 0);
     }
 }
 
@@ -178,13 +178,15 @@ function caFillPertNeg(divId, value, friendlyName) {
     }
     var inputName = divId.replace(/_id$/, '');
     var hidden = jQuery('input[name="' + inputName + '"]');
-    if (hidden.length) {
-        hidden[0].value = value;
-        hidden.trigger('change');
+    if (!hidden.length) {
+        console.warn('caFillPertNeg: hidden input not found for', inputName);
+        return false;
     }
+    hidden[0].value = value;
+    hidden.trigger('change');
     span.text(value);
     div.find('.add-multi-pick-button').hide();
-    caFlash('#' + divId + ' span');
+    caFlash('#' + divId + ' span.pcr-multi-pick-list');
     return true;
 }
 
@@ -223,7 +225,7 @@ function caFill(selector, value, friendlyName) {
             el[0].value = trimmedValue;
         }
     } else {
-        if (value === '0' || value === 'null') return false;
+        if (el.find('option:first').val() === value) return false;
         var existing = el.val();
         if (existing !== null && existing !== '' && existing !== '0' && existing !== 'null') {
             if (existing === value) return false;
