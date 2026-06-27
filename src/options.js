@@ -237,6 +237,7 @@ function restore_options() {
                 console.warn("I don't know what to do with " + field_type + ":" + field_id);
             }
         }
+        apply_pertneg_mutex();
     });
 }
 
@@ -328,6 +329,23 @@ function open_section_from_hash() {
     document.querySelectorAll('details').forEach(function(d) { d.open = false; });
     target.open = true;
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function apply_pertneg_mutex() {
+    var pairs = [
+        ['pg3_mental_present',  'pg3_mental_not_present'],
+        ['pg3_neuro_present',   'pg3_neuro_not_present']
+    ];
+    pairs.forEach(function(pair) {
+        var presentBoxes = document.querySelectorAll('[data-group="' + pair[0] + '"]:checked');
+        for (var i = 0; i < presentBoxes.length; i++) {
+            var val = presentBoxes[i].value;
+            var notPresentBoxes = document.querySelectorAll('[data-group="' + pair[1] + '"]');
+            for (var j = 0; j < notPresentBoxes.length; j++) {
+                if (notPresentBoxes[j].value === val) { notPresentBoxes[j].checked = false; break; }
+            }
+        }
+    });
 }
 
 function wire_pertneg_mutex() {
