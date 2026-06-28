@@ -1,0 +1,45 @@
+name: Tag & release on version bump
+
+# When src/manifest.json's version changes on main, create the matching
+# git tag and a GitHub Release (with auto-generated notes). The version number
+# itself is still bumped by hand in manifest.json — this only automates the
+# mechanical tagging/release once that change lands on main.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/manifest.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version and release if new
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          VERSION=$(jq -r .version src/manifest.json)
+          [ -n "$VERSION" ] && [ "$VERSION" != "null" ] || { echo "::error::no version in manifest"; exit 1; }
+          TAG="v${VERSION}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists — nothing to do."
+            exit 0
+          fi
+          echo "Creating release $TAG at ${GITHUB_SHA}"
+          gh release create "$TAG" \
+            --title "$TAG" \
+            --target "$GITHUB_SHA" \
+            --generate-notes
