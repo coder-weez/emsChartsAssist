@@ -75,7 +75,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.ver.outputs.update == 'true'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: chore/jquery-${{ steps.ver.outputs.latest }}
           base: main
