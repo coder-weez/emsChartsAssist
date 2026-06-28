@@ -158,47 +158,138 @@ function caClrPopup(fieldName) {
     }
 }
 
+// Derive the four hidden field names EMSCharts uses for a pertneg group from its divId.
+// divId is like "mental_text_id" (present) or "mental_text_neg_id" (not-present).
+// EMSCharts stores each selection across four parallel hidden inputs:
+//   present:     {typ}            {typ}_text            {typ}_cmdfacCustId       {typ}_examvalId
+//   not-present: {typ}_neg        {typ}_text_neg        {typ}_cmdfacCustId_neg   {typ}_examvalId_negs
+// The server reloads from the numeric {typ} (id) field — NOT the text field — so all
+// four must be set for a default to persist after leaving and returning to the page.
+function caPertNegFields(divId) {
+    var inputName = divId.replace(/_id$/, '');            // mental_text | mental_text_neg
+    var isNeg = /_neg$/.test(inputName);
+    var typ = inputName.replace('_text', '').replace('_neg', '');  // mental | neuro
+    return {
+        typ: typ,
+        isNeg: isNeg,
+        id:   isNeg ? typ + '_neg'              : typ,
+        text: isNeg ? typ + '_text_neg'         : typ + '_text',
+        cust: isNeg ? typ + '_cmdfacCustId_neg' : typ + '_cmdfacCustId',
+        exam: isNeg ? typ + '_examvalId_negs'   : typ + '_examvalId'
+    };
+}
+
+// Cache of pertneg picklist catalogs, keyed by type ("mental", "neuro").
+// Each value is a Promise resolving to { lowercaseLabel: {label, id, custId, examVal} }.
+var caPertNegCatalogs = {};
+
+// Fetch and parse the EMSCharts pertneg picklist, the authoritative source of the
+// numeric IDs the server actually saves. IDs are facility-specific (note cmdfac=...),
+// so text labels stored in Options must be resolved against the live catalog at fill time.
+// `params` is the 4th argument of the field's pertnegPick(...) onclick (facility params).
+function caPertNegCatalog(typ, params) {
+    if (caPertNegCatalogs[typ]) return caPertNegCatalogs[typ];
+    var url = '/common/pertneg_picklist.cfm?typ=' + encodeURIComponent(typ) +
+              '&ids=&ids_neg=&cmdfacCustIds=&cmdfacCustIds_neg=&' + params;
+    caPertNegCatalogs[typ] = fetch(url, { credentials: 'include' })
+        .then(function(r) { return r.text(); })
+        .then(function(html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var boxes = doc.querySelectorAll('input[name="exam_value_id"]');
+            var map = {};
+            boxes.forEach(function(cb) {
+                var label = (cb.getAttribute('tmpname') || '').trim();
+                if (!label) return;
+                map[label.toLowerCase()] = {
+                    label: label,
+                    id: cb.getAttribute('value') || '',
+                    custId: cb.getAttribute('cmdfaccustid') || '',
+                    examVal: cb.getAttribute('ex_valid') || ''
+                };
+            });
+            return map;
+        })
+        .catch(function(err) {
+            console.warn('caPertNegCatalog: failed to load picklist for', typ, err);
+            caPertNegCatalogs[typ] = null;   // allow retry on next call
+            return {};
+        });
+    return caPertNegCatalogs[typ];
+}
+
 // Fill an EMSCharts "pertneg" multi-select field (Mental / Neurological exam sections).
-// These fields display selected text in a span.pcr-multi-pick-list inside a div, and
-// store the text label in a hidden input whose name is derived by stripping "_id" from divId
-// (e.g. divId "mental_text_id" → input[name="mental_text"]).
-// value should be comma-separated text labels (e.g. "Oriented-Person,Oriented-Place").
-// Returns true if anything visible happened, false for silent no-ops.
+// `value` is a |-delimited string of text labels from Options (| avoids clashing with
+// commas inside labels like "Altered mental status, unspecified"). Each label is resolved
+// to its numeric id/custId/examVal via the picklist catalog, then written to all four
+// hidden fields so the selection persists server-side. Always overwrites existing content.
 function caFillPertNeg(divId, value, friendlyName) {
     if (value === undefined || value === null || value === '') return false;
     var div = jQuery('#' + divId);
     if (!div.length) return false;
     var span = div.find('span.pcr-multi-pick-list');
     if (!span.length) return false;
-    var current = span.text().trim();
-    if (current) {
-        if (current.toLowerCase() === value.toLowerCase()) return false;
-        caToast('"' + friendlyName + '" was not updated — field already has content.');
-        return true;
-    }
-    var inputName = divId.replace(/_id$/, '');
-    var hidden = jQuery('input[name="' + inputName + '"]');
-    if (!hidden.length) {
-        console.warn('caFillPertNeg: hidden input not found for', inputName);
-        return false;
-    }
-    hidden[0].value = value;
-    hidden.trigger('change');
-    span.text(value);
-    div.find('.add-multi-pick-button').hide();
-    caFlash('#' + divId + ' span.pcr-multi-pick-list');
+
+    var f = caPertNegFields(divId);
+    var labels = value.split('|').map(function(s) { return s.trim(); }).filter(Boolean);
+
+    // The onclick on the span (or ADD+ button) carries the facility params for the picklist.
+    var trigger = span.attr('onclick') || div.find('.add-multi-pick-button').attr('onclick') || '';
+    var pm = trigger.match(/,\s*'([^']*)'\s*\)/);
+    var params = pm ? pm[1] : '';
+
+    caPertNegCatalog(f.typ, params).then(function(catalog) {
+        var ids = [], texts = [], custIds = [], examVals = [], missing = [];
+        labels.forEach(function(label) {
+            var entry = catalog[label.toLowerCase()];
+            if (!entry) { missing.push(label); return; }
+            ids.push(entry.id);
+            texts.push(entry.label);
+            custIds.push(entry.custId);
+            examVals.push(entry.examVal);
+        });
+        if (missing.length) console.warn('caFillPertNeg: no catalog match for', missing, 'in', f.typ);
+        if (!texts.length) return;
+
+        var newText = texts.join(',');
+        if (span.text().trim().toLowerCase() === newText.toLowerCase()) return;
+
+        function setField(name, val) {
+            var el = jQuery('input[name="' + name + '"]');
+            if (el.length) el[0].value = val;
+            return el;
+        }
+        setField(f.id,   ids.join(','));
+        setField(f.cust, custIds.join(','));
+        setField(f.exam, examVals.join(','));
+        var textEl = setField(f.text, newText);
+        // Native events so EMSCharts' own (non-jQuery) listeners fire.
+        if (textEl && textEl.length) {
+            ['keyup', 'blur', 'change'].forEach(function(t) {
+                textEl[0].dispatchEvent(new Event(t, { bubbles: true }));
+            });
+        }
+        span.text(newText);
+        div.find('.add-multi-pick-button').hide();
+        caFlash('#' + divId + ' span.pcr-multi-pick-list');
+    });
     return true;
 }
 
 // Clear an EMSCharts "pertneg" multi-select field (companion to caFillPertNeg).
+// Blanks all four hidden fields so the cleared state persists server-side.
 function caClrPertNeg(divId) {
     var div = jQuery('#' + divId);
     if (!div.length) return;
-    var inputName = divId.replace(/_id$/, '');
-    var hidden = jQuery('input[name="' + inputName + '"]');
-    if (hidden.length) {
-        hidden[0].value = '';
-        hidden.trigger('change');
+    var f = caPertNegFields(divId);
+    [f.id, f.text, f.cust, f.exam].forEach(function(name) {
+        var el = jQuery('input[name="' + name + '"]');
+        if (el.length) el[0].value = '';
+    });
+    var textEl = jQuery('input[name="' + f.text + '"]');
+    if (textEl.length) {
+        ['keyup', 'blur', 'change'].forEach(function(t) {
+            textEl[0].dispatchEvent(new Event(t, { bubbles: true }));
+        });
     }
     div.find('span.pcr-multi-pick-list').text('');
     div.find('.add-multi-pick-button').show();
