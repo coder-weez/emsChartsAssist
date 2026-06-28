@@ -65,12 +65,17 @@ jobs:
       - name: Apply update
         if: steps.ver.outputs.update == 'true'
         env:
-          CURRENT: ${{ steps.ver.outputs.current }}
-          LATEST:  ${{ steps.ver.outputs.latest }}
+          LATEST: ${{ steps.ver.outputs.latest }}
         run: |
           set -euo pipefail
           mv jquery-new.min.js src/jquery.min.js
-          sed -i "s/jQuery ${CURRENT}/jQuery ${LATEST}/g" README.md
+          # Replace whatever "jQuery X.Y.Z" the README currently carries with the
+          # new version. Keyed off the README's own token (not $CURRENT) so a
+          # force_version test run still bumps the README correctly.
+          sed -i -E "s/jQuery [0-9]+(\.[0-9]+)+/jQuery ${LATEST}/g" README.md
+          if ! grep -q "jQuery ${LATEST}" README.md; then
+            echo "::warning::README has no 'jQuery X.Y.Z' token to bump — version note may be drifting."
+          fi
           rm -f jquery-npm.min.js jq.tgz
 
       - name: Create Pull Request
