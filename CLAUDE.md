@@ -30,6 +30,16 @@ Page 5 and page 8 both use **multiple preset buttons** instead of a single AutoC
 
 Each page script is injected only on its matching EMSCharts URL (defined in `manifest.json`). All page scripts share `chartassist.js` via the `"js"` array in the manifest content script entry.
 
+jQuery is **vendored** at `src/jquery.min.js` (a deliberately version-less filename so updates are an in-place overwrite — the manifest references never change). The actual version lives in the file's banner comment, in `README.md`, and in update PR titles.
+
+## Dependency updates (CI)
+
+All dependency updates arrive as **review-only pull requests** — nothing is merged to `main` automatically.
+
+- **jQuery** is vendored, so Dependabot can't track it. `.github/workflows/jquery-update.yml` runs weekly (and on demand via `workflow_dispatch`), compares `src/jquery.min.js`'s banner version against the npm registry, and on a newer release downloads it from the jQuery CDN, **verifies its SHA-256 against the npm tarball copy** (aborts on mismatch), overwrites the file, bumps the version in `README.md`, and opens a PR. Test it with the `force_version` input (e.g. `3.6.0`).
+- **GitHub Actions and the npm release tooling** (`chrome-webstore-upload-cli`) are watched by Dependabot (`.github/dependabot.yml`), `github-actions` + `npm` ecosystems, weekly.
+- **One-time setup:** enable *Settings → Actions → General → "Allow GitHub Actions to create and approve pull requests"* or the PR step fails. Dependabot reads its config from the **default branch**, so it activates only once this is on `main`.
+
 ## Key shared helpers (`chartassist.js`)
 
 ### `caFill(selector, value, friendlyName)`

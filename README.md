@@ -31,9 +31,20 @@ responsibility when using EMSCharts and any tools that interact with it.
 > correct section when the "Page Defaults" button is clicked. It works on
 > current versions of Chrome, which no longer load Manifest V2 extensions.
 >
-> **Dependencies:** The content scripts use jQuery 3.7.1. The Options page has
-> no third-party dependencies — its collapsible sections use native HTML
-> `<details>`/`<summary>` (the previous jQuery UI accordion was removed).
+> **Dependencies:** The content scripts use jQuery 3.7.1, vendored as
+> `src/jquery.min.js`. The Options page has no third-party dependencies — its
+> collapsible sections use native HTML `<details>`/`<summary>` (the previous
+> jQuery UI accordion was removed).
+>
+> **Automated dependency updates:** Updates arrive as review-only pull requests
+> (nothing is merged to `main` automatically):
+> - **jQuery** is vendored, so a scheduled GitHub Actions workflow
+>   (`.github/workflows/jquery-update.yml`) checks weekly for a newer release,
+>   downloads and integrity-verifies the file, and opens a PR bumping
+>   `src/jquery.min.js` (and this version note). It can also be run on demand
+>   from the **Actions** tab.
+> - **GitHub Actions and the npm release tooling** (`chrome-webstore-upload-cli`)
+>   are watched by Dependabot (`.github/dependabot.yml`).
 
 
 ## Install from Source
