@@ -1,8 +1,8 @@
 {
     "name": "EMSCharts Assist",
     "short_name": "ChartAssist",
-    "version": "0.5.0.1",
-    "version_name": "0.5.0.1 (Manifest V3)",
+    "version": "0.5.0.2",
+    "version_name": "0.5.0.2 (Manifest V3)",
     "description": "Autofills EMSCharts with defaults.",
     "manifest_version": 3,
     "minimum_chrome_version": "88",
@@ -30,7 +30,7 @@
                 "https://*.emscharts.com/pr/page2.cfm*"
             ],
             "js": [
-                "jquery-3.7.1.min.js",
+                "jquery.min.js",
                 "chartassist.js",
                 "page2.js"
             ],
@@ -44,7 +44,7 @@
                 "https://*.emscharts.com/pr/page3.cfm*"
             ],
             "js": [
-                "jquery-3.7.1.min.js",
+                "jquery.min.js",
                 "chartassist.js",
                 "page3.js"
             ],
@@ -58,7 +58,7 @@
                 "https://*.emscharts.com/pr/page4.cfm*"
             ],
             "js": [
-                "jquery-3.7.1.min.js",
+                "jquery.min.js",
                 "chartassist.js",
                 "page4.js"
             ],
@@ -72,7 +72,7 @@
                 "https://*.emscharts.com/pr/page5.cfm*"
             ],
             "js": [
-                "jquery-3.7.1.min.js",
+                "jquery.min.js",
                 "chartassist.js",
                 "page5.js"
             ],
@@ -86,7 +86,7 @@
                 "https://*.emscharts.com/pr/page8.cfm*"
             ],
             "js": [
-                "jquery-3.7.1.min.js",
+                "jquery.min.js",
                 "chartassist.js",
                 "page8.js"
             ],
