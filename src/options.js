@@ -136,7 +136,7 @@ function get_user_values() {
             var checked = document.querySelectorAll('[data-group="' + field_id + '"]:checked');
             var cbVals = [];
             for (var j=0; j<checked.length; j++) { cbVals.push(checked[j].value); }
-            vals[field_id] = cbVals.join(',');
+            vals[field_id] = cbVals.join('|');
             continue;
         }
 
@@ -211,7 +211,7 @@ function restore_options() {
             var user_val = items[field_id];
 
             if (field_type == "checkgroup") {
-                var selected = (user_val || '').split(',');
+                var selected = (user_val || '').split('|');
                 var boxes = document.querySelectorAll('[data-group="' + field_id + '"]');
                 for (var j=0; j<boxes.length; j++) {
                     boxes[j].checked = selected.indexOf(boxes[j].value) !== -1;

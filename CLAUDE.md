@@ -50,18 +50,28 @@ For EMSCharts **popup multi-select** fields — these have no `<select>` element
 **Important:** popup fields store **text labels**, not numeric IDs. Options in `options.html` for popup fields must use `value="Stretcher"` not `value="4880"`.
 
 ### `caFillPertNeg(divId, value, friendlyName)`
-For EMSCharts **pertneg** (pertinent positive/negative) multi-select fields such as Mental and Neurological on page 3. These are different from popup fields — they use a `div.multipick-common` containing a `span.pcr-multi-pick-list` for display and a hidden `input[name="{fieldName}"]`.
+For EMSCharts **pertneg** (pertinent positive/negative) multi-select fields such as Mental and Neurological on page 3. These are different from popup fields — they use a `div.multipick-common` containing a `span.pcr-multi-pick-list` for display, plus **four** parallel hidden inputs per group.
 
-- `divId` is the id of the display div (e.g. `"mental_text_id"`). The hidden input name is derived by stripping `_id` from the divId (e.g. `mental_text_id` → `input[name="mental_text"]`).
-- `value` should be a **comma-separated string of text labels** (e.g. `"Oriented-Person,Oriented-Place"`), matching what the pertneg popup would store.
-- Silently skips if span already has the exact same content. Shows toast if different content is already present.
-- Sets both the hidden input and the display span; hides the ADD+ button (`.add-multi-pick-button`).
+**Critical:** the server reloads each selection from the numeric **id** field (`{typ}`), *not* the text field. Setting only the text label looks correct in the session but is silently discarded on save — the old id reloads when you return to the page. All four hidden fields must be written:
+
+| Variant     | id field          | text field           | cmdfacCustId field           | examvalId field            |
+|-------------|-------------------|----------------------|------------------------------|----------------------------|
+| present     | `{typ}`           | `{typ}_text`         | `{typ}_cmdfacCustId`         | `{typ}_examvalId`          |
+| not-present | `{typ}_neg`       | `{typ}_text_neg`     | `{typ}_cmdfacCustId_neg`     | `{typ}_examvalId_negs`     |
+
+`caPertNegFields(divId)` derives all four names from the divId (`mental_text_id` → present mental; `mental_text_neg_id` → not-present mental; `typ` is `mental`/`neuro`).
+
+- `value` is a **`|`-delimited** string of text labels from Options. `|` is used (not `,`) because some labels contain commas (e.g. `"Altered mental status, unspecified"`); splitting on `,` corrupted them — this was the original save bug.
+- IDs are **facility-specific** (the picklist URL carries `cmdfac=...`), so labels are resolved to ids at fill time, not stored. `caPertNegCatalog(typ, params)` fetches `/common/pertneg_picklist.cfm` and parses each `input[name="exam_value_id"]` checkbox's `tmpname` (label), `value` (id), `cmdfaccustid`, and `ex_valid` attributes into a label→attributes map, cached per type. `params` is the 4th argument of the field's `pertnegPick(...)` onclick.
+- **Async:** the fetch makes `caFillPertNeg` resolve its work in a promise; it returns `true` synchronously when there is something to fill.
+- **Always overwrites** existing content (skips only if the display already matches exactly). EMSCharts' own default (e.g. a stale "Combative") is replaced by the user's configured default.
+- Uses **native** DOM events (`dispatchEvent(new Event(...))`), not jQuery `.trigger()` — EMSCharts binds native listeners that jQuery synthetic events don't reach.
 
 ### `caClrField(selector)` / `caClrPopup(fieldName)` / `caClrPertNeg(divId)`
 Companion clear helpers, called by the **Clear Fields** button on each page. Each mirrors its fill counterpart:
 - `caClrField` — sets text/textarea to `""` or select to `""`.
 - `caClrPopup` — clears the `_text` hidden input and display span; shows the ADD+ button.
-- `caClrPertNeg` — clears the hidden input and display span; shows the ADD+ button.
+- `caClrPertNeg` — blanks all four hidden fields (id/text/cmdfacCustId/examvalId, present or not-present per the divId) and the display span; shows the ADD+ button.
 
 ### `caToast(message)` / `caFlash(selector)`
 - Toast: yellow stacking notification, 6s, `⚠` prefix via CSS `::before`. Stacks vertically.
@@ -82,7 +92,7 @@ Fields are declared in four arrays at the top of `options.js`:
 - `txtInputs` — `<input type="text">` fields
 - `txtAreas` — `<textarea>` fields
 - `selBoxes` — `<select>` fields (includes popup fields, stored as selects in options UI)
-- `pertNegGroups` — pertneg checkbox-group fields (Mental/Neurological). These have **no wrapper element with the storage key as id**; instead, each checkbox carries a `data-group="{storageKey}"` attribute. Saved as comma-separated text labels.
+- `pertNegGroups` — pertneg checkbox-group fields (Mental/Neurological). These have **no wrapper element with the storage key as id**; instead, each checkbox carries a `data-group="{storageKey}"` attribute. Saved as a **`|`-delimited** string of text labels (not comma — labels can contain commas).
 
 Storage keys follow the pattern `pg{N}_{fieldName}` (e.g. `pg2_chief_complaint`, `pg3_airway_status`).
 

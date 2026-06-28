@@ -71,7 +71,8 @@ Your defaults are saved with Chrome's built-in
     enabled (otherwise it behaves like local storage).
   * **Flat key/value layout.** Settings are stored as a single flat object whose
     keys are page-prefixed strings (e.g. `pg2_chief_complaint`, `gcs_motor_1`).
-    Values are plain strings — either a field's text or a `<select>` option value.
+    Values are plain strings — a field's text, a `<select>` option value, or a
+    `|`-delimited list of labels for multi-select (Mental/Neurological) fields.
   * **Size limits.** `storage.sync` allows roughly 100 KB total and ~8 KB per
     item; the short text defaults here stay well within that.
   * **Not encrypted at rest.** Values are stored as-is and are readable by anyone
