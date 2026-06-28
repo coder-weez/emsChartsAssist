@@ -316,9 +316,15 @@ function caFill(selector, value, friendlyName) {
             el[0].value = trimmedValue;
         }
     } else {
-        if (el.find('option:first').val() === value) return false;
+        // The first <option> is the blank/placeholder. Its value varies across
+        // EMSCharts selects ('', '0', 'null', or '-1' for Airway Status), so treat
+        // whatever it is as "blank" rather than hard-coding the known values.
+        var blankVal = el.find('option:first').val();
+        if (blankVal === value) return false;
         var existing = el.val();
-        if (existing !== null && existing !== '' && existing !== '0' && existing !== 'null') {
+        var existingBlank = existing === null || existing === '' || existing === '0' ||
+                            existing === 'null' || existing === blankVal;
+        if (!existingBlank) {
             if (existing === value) return false;
             caToast('"' + friendlyName + '" was not updated — field already has content.');
             return true;

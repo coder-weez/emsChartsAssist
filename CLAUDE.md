@@ -46,7 +46,7 @@ All dependency updates arrive as **review-only pull requests** — nothing is me
 Standard field filler. Handles text inputs, textareas, and selects. Returns `true` if anything visible happened (fill or toast), `false` for silent no-ops (no element, no value, or field already exactly matches the default).
 
 - **Text/textarea**: reads current value with `el[0].value` (not `.val()` — EMSCharts textarea state can desync with jQuery). Appends if non-empty and value not already present (`indexOf` check). Shows toast on append.
-- **Select**: skips silently if `value` is `null`, `""`, `"0"`, or `"null"` (the string) — all treated as blank so that a stored blank option never triggers a fill or flash. Shows toast if a *different* non-blank value is already selected.
+- **Select**: skips silently if `value` is `null`, `""`, `"0"`, or `"null"` (the string) — all treated as blank so that a stored blank option never triggers a fill or flash. The field's *existing* value is treated as blank when it is any of those **or** equals the first option's value (the placeholder, e.g. Airway Status's `-1`), so a field still on its placeholder is filled, not toasted. Shows toast only if a *different* non-blank value is already selected.
 - Calls `caFlash` on success.
 
 ### `caFillPopup(fieldName, value, friendlyName)`
@@ -139,5 +139,5 @@ These use `caFillPertNeg` / `caClrPertNeg`. The hidden input name equals the div
 - **Wrong element type**: EMSCharts popup fields have no `<select>` — use `caFillPopup`, not `caFill`.
 - **Text vs numeric values**: standard selects use numeric IDs (e.g. `"1240"` for Minutes); popup fields use text labels (e.g. `"Stretcher"`). Check the actual EMSCharts DOM before adding options.
 - **jQuery `.val()` unreliable for read-back**: always use `el[0].value` to read current content of text inputs and textareas.
-- **`"null"` / `"0"` strings**: GCS, stroke scale, and some motor/sensory blank options use `value="null"` or `value="0"`. Both are treated as blank by `caFill` for the incoming `value` (not just for `existing`), so a stored blank option never triggers a fill or flash.
+- **Blank-option values vary**: GCS/stroke scale blanks use `value="null"` or `value="0"`; Airway Status uses `value="-1"`. For the incoming `value`, `caFill` treats `null`/`""`/`"0"`/`"null"` as blank. For the field's *existing* value it additionally treats the **first option's value** as blank (the first `<option>` is always the placeholder), so a field still showing its placeholder is correctly seen as empty regardless of that placeholder's value (e.g. `-1`) and gets filled rather than toasted.
 - **Background service worker required for `chrome.tabs`**: content scripts cannot call `chrome.tabs.create`. Send a message to `background.js` instead.
