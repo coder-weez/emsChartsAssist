@@ -1,6 +1,6 @@
 {
     "devDependencies": {
-	"chrome-webstore-upload-cli": "^1.0.0"
+	"chrome-webstore-upload-cli": "^4.0.1"
     },
     "scripts": {
 	"test": "echo 'no tests'",
